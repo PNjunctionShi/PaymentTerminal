@@ -190,6 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="PaymentRibbon.h" />
     <ClInclude Include="PaymentTerminal.h" />
     <ClInclude Include="PaymentTerminalDoc.h" />
     <ClInclude Include="PaymentTerminalView.h" />
@@ -199,6 +200,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="PaymentRibbon.cpp" />
     <ClCompile Include="PaymentTerminal.cpp" />
     <ClCompile Include="PaymentTerminalDoc.cpp" />
     <ClCompile Include="PaymentTerminalView.cpp" />
@@ -233,4 +235,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="PaymentTerminal.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
