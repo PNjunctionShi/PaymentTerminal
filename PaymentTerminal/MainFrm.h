@@ -13,6 +13,7 @@
 //
 
 #pragma once
+#include "PaymentRibbon.h"
 
 class CMainFrame : public CFrameWndEx
 {
@@ -40,8 +41,8 @@ public:
 #endif
 
 protected:  // 控件条嵌入成员
-	CMFCRibbonBar     m_wndRibbonBar;
-	CMFCRibbonApplicationButton m_MainButton;
+	CPayRibbonBar     m_wndRibbonBar;
+	CPayRibbonUserButton m_MainButton;
 	CMFCToolBarImages m_PanelImages;
 	CMFCRibbonStatusBar  m_wndStatusBar;
 	CMFCCaptionBar    m_wndCaptionBar;
