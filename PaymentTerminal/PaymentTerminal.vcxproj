@@ -199,6 +199,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Paywinverapi.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="PaymentRibbon.cpp" />
     <ClCompile Include="PaymentTerminal.cpp" />

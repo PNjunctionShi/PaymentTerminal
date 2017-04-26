@@ -43,11 +43,83 @@ public:
 public:
 	virtual BOOL LoadFromResource(UINT uiXMLResID, LPCTSTR lpszResType = RT_RIBBON, HINSTANCE hInstance = NULL);
 	virtual BOOL LoadFromResource(LPCTSTR lpszXMLResID, LPCTSTR lpszResType = RT_RIBBON, HINSTANCE hInstance = NULL);
+	virtual void RecalcLayout();
 
 protected:
-	void SetAutoDestroyMainButton(){ m_bAutoDestroyMainButton = TRUE; }
 		
 	DECLARE_MESSAGE_MAP()
 };
 
 
+#pragma once
+
+
+// CPayRibbonQAT
+
+class CPayRibbonQAT : public CMFCRibbonQuickAccessToolBar
+{
+	friend class CPayRibbonBar;
+	DECLARE_DYNAMIC(CPayRibbonQAT)
+
+public:
+	CPayRibbonQAT();
+	virtual ~CPayRibbonQAT();
+
+protected:
+	DECLARE_MESSAGE_MAP()
+};
+
+#pragma once
+
+// CPayRibbonButtonsGroup 命令目标
+
+class CPayRibbonButtonsGroup : public CMFCRibbonButtonsGroup
+{
+	friend class CPayRibbonBar;
+public:
+	CPayRibbonButtonsGroup();
+	virtual ~CPayRibbonButtonsGroup();
+};
+
+
+#pragma once
+
+// CPayRibbonTabsGroup 命令目标
+
+class CPayRibbonTabsGroup : public CMFCRibbonTabsGroup
+{
+	friend class CPayRibbonBar;
+
+public:
+	CPayRibbonTabsGroup();
+	virtual ~CPayRibbonTabsGroup();
+};
+
+
+
+#pragma once
+
+// CPayRibbonCategory 命令目标
+
+class CPayRibbonCategory : public CMFCRibbonCategory
+{
+	friend class CPayRibbonBar;
+
+public:
+	CPayRibbonCategory();
+	virtual ~CPayRibbonCategory();
+};
+
+
+#pragma once
+
+// CPayRibbonContextCaption 命令目标
+
+class CPayRibbonContextCaption : public CMFCRibbonContextCaption
+{
+	friend class CPayRibbonBar;
+
+public:
+	CPayRibbonContextCaption();
+	virtual ~CPayRibbonContextCaption();
+};
