@@ -61,7 +61,7 @@ CMFCRibbonApplicationButton* CPayRibbonConstructor::CreateApplicationButton(CMFC
 	//bar.m_bAutoDestroyMainButton = TRUE;
 	CPayRibbonBar *pPayBar =(CPayRibbonBar *) &bar;
 	pPayBar->m_bAutoDestroyMainButton=TRUE;
-	bar.SetApplicationButton(new CPayRibbonUserButton, CSize(80, 115));
+	bar.SetApplicationButton(new CPayRibbonUserButton, CSize(86, 115));
 
 	return bar.GetApplicationButton();
 }
