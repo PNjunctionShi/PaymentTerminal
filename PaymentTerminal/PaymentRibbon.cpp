@@ -390,7 +390,7 @@ void CPayRibbonBar::RecalcLayout()
 
 		if (nTabs > 0)
 		{
-			const int nTabLeftOffset = sizeMainButton.cx + 1;
+			const int nTabLeftOffset = sizeMainButton.cx + 5;
 			const int cxTabsArea = rect.Width() - nTabLeftOffset - sizeTabElemens.cx - nXMargin;
 			const int nMaxTabWidth = cxTabsArea / nTabs;
 
@@ -564,6 +564,7 @@ void CPayRibbonBar::RecalcLayout()
 		}
 
 		rectCategory.top = yTabBottom;
+		rectCategory.left = sizeMainButton.cx + 1;;
 	}
 
 	p_TabElements->OnAfterChangeRect(&dc);
