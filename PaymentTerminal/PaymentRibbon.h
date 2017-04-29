@@ -44,9 +44,10 @@ public:
 	virtual BOOL LoadFromResource(UINT uiXMLResID, LPCTSTR lpszResType = RT_RIBBON, HINSTANCE hInstance = NULL);
 	virtual BOOL LoadFromResource(LPCTSTR lpszXMLResID, LPCTSTR lpszResType = RT_RIBBON, HINSTANCE hInstance = NULL);
 	virtual void RecalcLayout();
-
+	
 protected:
-		
+	virtual CSize CalcFixedLayout(BOOL bStretch, BOOL bHorz);
+
 	DECLARE_MESSAGE_MAP()
 };
 

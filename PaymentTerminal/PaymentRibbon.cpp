@@ -61,7 +61,7 @@ CMFCRibbonApplicationButton* CPayRibbonConstructor::CreateApplicationButton(CMFC
 	//bar.m_bAutoDestroyMainButton = TRUE;
 	CPayRibbonBar *pPayBar =(CPayRibbonBar *) &bar;
 	pPayBar->m_bAutoDestroyMainButton=TRUE;
-	bar.SetApplicationButton(new CPayRibbonUserButton, CSize(80, 93));
+	bar.SetApplicationButton(new CPayRibbonUserButton, CSize(80, 115));
 
 	return bar.GetApplicationButton();
 }
@@ -141,7 +141,6 @@ void CPayRibbonBar::RecalcLayout()
 
 	CRect rect;
 	GetClientRect(rect);
-
 	CClientDC dc(this);
 
 	CFont* pOldFont = dc.SelectObject(GetFont());
@@ -285,9 +284,9 @@ void CPayRibbonBar::RecalcLayout()
 				yOffset += GetSystemMetrics(SM_CYSIZEFRAME) / 2;
 			}
 
-			m_pMainButton->SetRect(CRect(CPoint(rect.left, rect.top + yOffset), sizeMainButton));
+			m_pMainButton->SetRect(CRect(CPoint(rect.left, rect.top + yOffset), sizeMainButton));//yOffset
 
-			if (!IsWindows7Look())
+			if (0)//!IsWindows7Look())
 			{
 				m_rectCaptionText.left = m_pMainButton->GetRect().right + nXMargin;
 			}
@@ -295,7 +294,7 @@ void CPayRibbonBar::RecalcLayout()
 			{
 				CRect rectMainBtn = rect;
 				rectMainBtn.top = m_rectCaption.IsRectEmpty() ? rect.top : m_rectCaption.bottom;
-				rectMainBtn.bottom = rectMainBtn.top + m_nTabsHeight;
+				rectMainBtn.bottom = rectMainBtn.top + m_nTabsHeight+ nCategoryHeight;
 				rectMainBtn.right = rectMainBtn.left + m_sizeMainButton.cx;
 
 				m_pMainButton->SetRect(rectMainBtn);
@@ -653,11 +652,94 @@ void CPayRibbonBar::RecalcLayout()
 	}
 
 	UpdateToolTipsRect();
-
 	if (!m_bSingleLevelAccessibilityMode)
 	{
 		m_Tabs.UpdateTabs(m_arCategories);
 	}
+}
+
+CSize CPayRibbonBar::CalcFixedLayout(BOOL, BOOL /*bHorz*/)
+{
+	ASSERT_VALID(this);
+
+	CClientDC dc(this);
+
+	CFont* pOldFont = dc.SelectObject(GetFont());
+	ENSURE(pOldFont != NULL);
+
+	TEXTMETRIC tm;
+	dc.GetTextMetrics(&tm);
+
+	m_nCaptionHeight = 0;
+
+	if (m_bReplaceFrameCaption)
+	{
+		m_nCaptionHeight = GetSystemMetrics(SM_CYCAPTION) + 1;
+
+		if (GetGlobalData()->IsDwmCompositionEnabled())
+		{
+			m_nCaptionHeight += GetSystemMetrics(SM_CYSIZEFRAME);
+		}
+	}
+
+	int cy = 0;
+
+	CSize sizeMainButton = m_sizeMainButton;
+	double scale = GetGlobalData()->GetRibbonImageScale();
+	if (scale > 1.)
+	{
+		sizeMainButton.cx = (int)(.5 + scale * sizeMainButton.cx);
+		sizeMainButton.cy = (int)(.5 + scale * sizeMainButton.cy);
+	}
+
+	if (m_dwHideFlags & AFX_RIBBONBAR_HIDE_ALL)
+	{
+		cy = m_nCaptionHeight;
+	}
+	else
+	{
+		if (m_bRecalcCategoryHeight)
+		{
+			m_nCategoryHeight = 0;
+		}
+
+		m_nTabsHeight = tm.tmHeight + 2 * nYTabMargin;
+
+		if (m_bRecalcCategoryHeight)
+		{
+			for (int i = 0; i < (int)m_arCategories.GetSize(); i++)
+			{
+				CMFCRibbonCategory* pCategory = m_arCategories[i];
+				ASSERT_VALID(pCategory);
+
+				m_nCategoryHeight = max(m_nCategoryHeight, pCategory->GetMaxHeight(&dc));
+			}
+			m_bRecalcCategoryHeight = FALSE;
+		}
+		CPayRibbonQAT * p_QAToolbar = (CPayRibbonQAT *)&m_QAToolbar;
+		const CSize sizeAQToolbar = p_QAToolbar->GetRegularSize(&dc);
+
+		if (IsQuickAccessToolbarOnTop())
+		{
+			m_nCaptionHeight = max(m_nCaptionHeight, sizeAQToolbar.cy + (IsWindows7Look() ? 0 : (2 * nYMargin)));
+		}
+
+		const int nQuickAceesToolbarHeight = IsQuickAccessToolbarOnTop() ? 0 : sizeAQToolbar.cy;
+		const int nCategoryHeight = (m_dwHideFlags & AFX_RIBBONBAR_HIDE_ELEMENTS) ? 0 : m_nCategoryHeight;
+
+		cy = nQuickAceesToolbarHeight + m_nCaptionHeight + max(nCategoryHeight + m_nTabsHeight, m_sizeMainButton.cy + nYMargin);
+	}
+
+	if (GetGlobalData()->IsDwmCompositionEnabled())
+	{
+		if (GetParent()->IsZoomed() && m_bReplaceFrameCaption)
+		{
+			cy += ::GetSystemMetrics(SM_CYSIZEFRAME) - 2;
+		}
+	}
+
+	dc.SelectObject(pOldFont);
+	return CSize(32767, cy);
 }
 
 BEGIN_MESSAGE_MAP(CPayRibbonBar, CMFCRibbonBar)
