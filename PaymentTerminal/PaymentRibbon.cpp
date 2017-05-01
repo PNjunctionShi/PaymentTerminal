@@ -80,7 +80,6 @@ IMPLEMENT_DYNAMIC(CPayRibbonBar, CMFCRibbonBar)
 
 CPayRibbonBar::CPayRibbonBar()
 {
-
 }
 
 CPayRibbonBar::~CPayRibbonBar()
@@ -743,6 +742,86 @@ CSize CPayRibbonBar::CalcFixedLayout(BOOL, BOOL /*bHorz*/)
 	return CSize(32767, cy);
 }
 
+CMFCRibbonBaseElement* CPayRibbonBar::HitTest(CPoint point, BOOL bCheckActiveCategory, BOOL bCheckPanelCaption)
+{
+	ASSERT_VALID(this);
+
+	int i = 0;
+
+	// Check for the main button:
+	if (m_pMainButton != NULL)
+	{
+		ASSERT_VALID(m_pMainButton);
+
+		CRect rectMainButton = m_pMainButton->GetRect();
+
+		//if (!IsWindows7Look())
+		//{
+		//	rectMainButton.left = rectMainButton.top = 0;
+		//}
+
+		if (rectMainButton.PtInRect(point))
+		{
+			return m_pMainButton;
+		}
+	}
+
+	// Check for quick access toolbar:
+	CMFCRibbonBaseElement* pQAElem = ((CPayRibbonQAT*)(&m_QAToolbar))->HitTest(point);
+	if (pQAElem != NULL)
+	{
+		ASSERT_VALID(pQAElem);
+		return pQAElem;
+	}
+
+	// Check for tab elements:
+	CMFCRibbonBaseElement* pTabElem = ((CPayRibbonButtonsGroup*)(&m_TabElements))->HitTest(point);
+	if (pTabElem != NULL)
+	{
+		ASSERT_VALID(pTabElem);
+		return pTabElem->HitTest(point);
+	}
+
+	// Check for caption buttons:
+	for (i = 0; i < AFX_RIBBON_CAPTION_BUTTONS; i++)
+	{
+		if (m_CaptionButtons[i].GetRect().PtInRect(point))
+		{
+			return &m_CaptionButtons[i];
+		}
+	}
+
+	// Check for context captions:
+	for (i = 0; i < (int)m_arContextCaptions.GetSize(); i++)
+	{
+		ASSERT_VALID(m_arContextCaptions[i]);
+
+		if (m_arContextCaptions[i]->GetRect().PtInRect(point))
+		{
+			return m_arContextCaptions[i];
+		}
+	}
+
+	// Check for tabs:
+	for (i = 0; i < (int)m_arCategories.GetSize(); i++)
+	{
+		CPayRibbonCategory* pCategory = (CPayRibbonCategory*)m_arCategories[i];
+		ASSERT_VALID(pCategory);
+
+		if (pCategory->m_Tab.GetRect().PtInRect(point))
+		{
+			return &pCategory->m_Tab;
+		}
+	}
+
+	if (bCheckActiveCategory && m_pActiveCategory != NULL && (m_dwHideFlags & AFX_RIBBONBAR_HIDE_ELEMENTS) == 0)
+	{
+		ASSERT_VALID(m_pActiveCategory);
+		return m_pActiveCategory->HitTest(point, bCheckPanelCaption);
+	}
+
+	return NULL;
+}
 BEGIN_MESSAGE_MAP(CPayRibbonBar, CMFCRibbonBar)
 END_MESSAGE_MAP()
 
@@ -858,5 +937,3 @@ CPayRibbonContextCaption::~CPayRibbonContextCaption()
 {
 }
 
-
-// CPayRibbonCategory ³ÉÔ±º¯Êý
