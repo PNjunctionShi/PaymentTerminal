@@ -42,6 +42,15 @@
     <ClInclude Include="PaymentRibbon.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="OrderView.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MembershipView.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CouponView.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PaymentTerminal.cpp">
@@ -63,6 +72,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Paywinverapi.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OrderView.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MembershipView.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CouponView.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

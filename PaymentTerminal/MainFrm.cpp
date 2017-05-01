@@ -66,6 +66,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;      // Î´ÄÜ´´½¨
 	}
 
+	m_wndOrderView.Create(this);
 	CString strTitlePane1;
 	CString strTitlePane2;
 	bNameValid = strTitlePane1.LoadString(IDS_STATUS_PANE1);

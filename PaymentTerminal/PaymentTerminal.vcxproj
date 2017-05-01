@@ -189,7 +189,10 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CouponView.h" />
     <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="MembershipView.h" />
+    <ClInclude Include="OrderView.h" />
     <ClInclude Include="PaymentRibbon.h" />
     <ClInclude Include="PaymentTerminal.h" />
     <ClInclude Include="PaymentTerminalDoc.h" />
@@ -199,6 +202,9 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CouponView.cpp" />
+    <ClCompile Include="MembershipView.cpp" />
+    <ClCompile Include="OrderView.cpp" />
     <ClCompile Include="Paywinverapi.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="PaymentRibbon.cpp" />
