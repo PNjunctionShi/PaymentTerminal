@@ -10,6 +10,7 @@ class CCouponView : public CDockablePane
 public:
 	CCouponView();
 	virtual ~CCouponView();
+	virtual BOOL Create(CWnd* pParentWnd);
 
 protected:
 	DECLARE_MESSAGE_MAP()

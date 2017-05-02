@@ -36,6 +36,12 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CMainFrame::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CMainFrame::OnFilePrintPreview)
 	ON_UPDATE_COMMAND_UI(ID_FILE_PRINT_PREVIEW, &CMainFrame::OnUpdateFilePrintPreview)
+	ON_COMMAND(ID_Order, &CMainFrame::OnOrder)
+	ON_UPDATE_COMMAND_UI(ID_Order, &CMainFrame::OnUpdateOrder)
+	ON_COMMAND(ID_Coupon, &CMainFrame::OnCoupon)
+	ON_UPDATE_COMMAND_UI(ID_Coupon, &CMainFrame::OnUpdateCoupon)
+	ON_COMMAND(ID_Membership, &CMainFrame::OnMembership)
+	ON_UPDATE_COMMAND_UI(ID_Membership, &CMainFrame::OnUpdateMembership)
 END_MESSAGE_MAP()
 
 // CMainFrame 构造/析构
@@ -66,7 +72,27 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;      // 未能创建
 	}
 
-	m_wndOrderView.Create(this);
+	if (!m_wndOrderView.Create(this))
+	{
+		TRACE0("未能创建订单视图\n");
+		return -1;      // 未能创建
+	}
+
+	if (!m_wndMembershipView.Create(this))
+	{
+		TRACE0("未能创建会员视图\n");
+		return -1;      // 未能创建
+	}
+
+	if (!m_wndCouponView.Create(this))
+	{
+		TRACE0("未能创建卡券视图\n");
+		return -1;      // 未能创建
+	}
+
+	CDockablePane* pTabbedBar = NULL;
+	m_wndMembershipView.AttachToTabWnd(&m_wndOrderView, DM_SHOW, TRUE, &pTabbedBar);
+	m_wndCouponView.AttachToTabWnd(&m_wndOrderView, DM_SHOW, TRUE, &pTabbedBar);
 	CString strTitlePane1;
 	CString strTitlePane2;
 	bNameValid = strTitlePane1.LoadString(IDS_STATUS_PANE1);
@@ -275,4 +301,49 @@ void CMainFrame::OnFilePrintPreview()
 void CMainFrame::OnUpdateFilePrintPreview(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(IsPrintPreview());
+}
+
+
+void CMainFrame::OnOrder()
+{
+	m_wndOrderView.ShowPane(m_wndOrderView.IsVisible()?FALSE:TRUE, FALSE, TRUE);
+	RecalcLayout(FALSE);
+	// TODO: 在此添加命令处理程序代码
+}
+
+
+void CMainFrame::OnUpdateOrder(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(m_wndOrderView.IsVisible());
+	// TODO: 在此添加命令更新用户界面处理程序代码
+}
+
+
+void CMainFrame::OnCoupon()
+{
+	m_wndCouponView.ShowPane(m_wndCouponView.IsVisible() ? FALSE : TRUE, FALSE, TRUE);
+	RecalcLayout(FALSE);
+	// TODO: 在此添加命令处理程序代码
+}
+
+
+void CMainFrame::OnUpdateCoupon(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(m_wndCouponView.IsVisible());
+	// TODO: 在此添加命令更新用户界面处理程序代码
+}
+
+
+void CMainFrame::OnMembership()
+{
+	m_wndMembershipView.ShowPane(m_wndMembershipView.IsVisible() ? FALSE : TRUE, FALSE, TRUE);
+	RecalcLayout(FALSE);
+	// TODO: 在此添加命令处理程序代码
+}
+
+
+void CMainFrame::OnUpdateMembership(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(m_wndMembershipView.IsVisible());
+	// TODO: 在此添加命令更新用户界面处理程序代码
 }

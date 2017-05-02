@@ -67,6 +67,13 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 	BOOL CreateCaptionBar();
+public:
+	afx_msg void OnOrder();
+	afx_msg void OnUpdateOrder(CCmdUI *pCmdUI);
+	afx_msg void OnCoupon();
+	afx_msg void OnUpdateCoupon(CCmdUI *pCmdUI);
+	afx_msg void OnMembership();
+	afx_msg void OnUpdateMembership(CCmdUI *pCmdUI);
 };
 
 
