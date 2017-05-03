@@ -14,7 +14,7 @@
 
 
 #pragma once
-
+#include "Order.h"
 
 class CPaymentTerminalDoc : public CDocument
 {
@@ -24,7 +24,9 @@ protected: // 仅从序列化创建
 
 // 特性
 public:
-
+	CTime m_timCreate;
+	CString m_strCreator;
+	CTypedPtrList<CObList, COrder> m_listOrder;
 // 操作
 public:
 

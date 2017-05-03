@@ -51,6 +51,12 @@
     <ClInclude Include="CouponView.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Order.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Commodity.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PaymentTerminal.cpp">
@@ -81,6 +87,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="CouponView.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Order.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Commodity.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
