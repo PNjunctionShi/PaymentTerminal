@@ -15,6 +15,8 @@
 
 #pragma once
 #include "Order.h"
+#include "Coupon.h"
+#include "Member.h"
 
 class CPaymentTerminalDoc : public CDocument
 {
@@ -27,6 +29,8 @@ public:
 	CTime m_timCreate;
 	CString m_strCreator;
 	CTypedPtrList<CObList, COrder> m_listOrder;
+	CTypedPtrList<CObList, CCoupon> m_listCoupon;
+	CTypedPtrList<CObList, CMember> m_listMember;
 // ²Ù×÷
 public:
 

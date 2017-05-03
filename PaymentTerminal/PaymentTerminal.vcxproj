@@ -190,8 +190,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Commodity.h" />
+    <ClInclude Include="Coupon.h" />
     <ClInclude Include="CouponView.h" />
     <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="Member.h" />
     <ClInclude Include="MembershipView.h" />
     <ClInclude Include="Order.h" />
     <ClInclude Include="OrderView.h" />
@@ -205,7 +207,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Commodity.cpp" />
+    <ClCompile Include="Coupon.cpp" />
     <ClCompile Include="CouponView.cpp" />
+    <ClCompile Include="Member.cpp" />
     <ClCompile Include="MembershipView.cpp" />
     <ClCompile Include="Order.cpp" />
     <ClCompile Include="OrderView.cpp" />
