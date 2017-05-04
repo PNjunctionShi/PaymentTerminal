@@ -20,11 +20,17 @@ class CPaymentTerminalView : public CView
 protected: // 仅从序列化创建
 	CPaymentTerminalView();
 	DECLARE_DYNCREATE(CPaymentTerminalView)
+	afx_msg int OnCreate(LPCREATESTRUCT lpcs);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 
 // 特性
 public:
 	CPaymentTerminalDoc* GetDocument() const;
+	CMFCTabCtrl m_wndTabs;
 
+	CMFCListCtrl m_wndOrderList;
+	CMFCListCtrl m_wndMemberList;
+	CMFCListCtrl m_wndCouponList;
 // 操作
 public:
 

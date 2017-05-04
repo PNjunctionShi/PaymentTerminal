@@ -326,6 +326,9 @@ IDR_RIBBON              RT_RIBBON_XML           "res\\ribbon.mfcribbon-ms"
 STRINGTABLE
 BEGIN
     IDP_OLE_INIT_FAILED     "OLE 初始化失败。  请确保 OLE 库是正确的版本。"
+    IDS_ORDERLIST_TAB       "订单列表"
+    IDS_MEMBERLIST_TAB      "会员列表"
+    IDS_COUPONLIST_TAB      "卡券列表"
 END
 
 STRINGTABLE

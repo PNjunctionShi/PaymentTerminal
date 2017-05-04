@@ -131,6 +131,55 @@ CPaymentTerminalDoc* CPaymentTerminalView::GetDocument() const // 非调试版本是内
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CPaymentTerminalDoc)));
 	return (CPaymentTerminalDoc*)m_pDocument;
 }
+
+int CPaymentTerminalView::OnCreate(LPCREATESTRUCT lpcs)
+{
+	if (CView::OnCreate(lpcs) == -1)
+		return -1;
+
+	CRect rectDummy;
+	rectDummy.SetRectEmpty();
+
+	// 创建选项卡窗口: 
+
+	if (!m_wndTabs.Create(CMFCTabCtrl::STYLE_FLAT, rectDummy, this, 1))
+	{
+		TRACE0("未能创建输出选项卡窗口\n");
+		return -1;      // 未能创建
+	}
+	const DWORD dwStyle = LBS_NOINTEGRALHEIGHT | WS_CHILD | WS_VISIBLE | WS_HSCROLL | WS_VSCROLL;
+	if (!m_wndOrderList.Create(dwStyle, rectDummy, &m_wndTabs, 2) ||
+		!m_wndMemberList.Create(dwStyle, rectDummy, &m_wndTabs, 3) ||
+		!m_wndCouponList.Create(dwStyle, rectDummy, &m_wndTabs, 4))
+	{
+		TRACE0("未能创建输出窗口\n");
+		return -1;      // 未能创建
+	}
+
+	CString strTabName;
+	BOOL bNameValid;
+
+	// 将列表窗口附加到选项卡: 
+	bNameValid = strTabName.LoadString(IDS_ORDERLIST_TAB);
+	ASSERT(bNameValid);
+	m_wndTabs.AddTab(&m_wndOrderList, strTabName, (UINT)0);
+	bNameValid = strTabName.LoadString(IDS_MEMBERLIST_TAB);
+	ASSERT(bNameValid);
+	m_wndTabs.AddTab(&m_wndMemberList, strTabName, (UINT)1);
+	bNameValid = strTabName.LoadString(IDS_COUPONLIST_TAB);
+	ASSERT(bNameValid);
+	m_wndTabs.AddTab(&m_wndCouponList, strTabName, (UINT)2);
+
+	return 0;
+}
+
+void CPaymentTerminalView::OnSize(UINT nType, int cx, int cy)
+{
+	CView::OnSize(nType, cx, cy);
+
+	// 选项卡控件应覆盖整个工作区: 
+	m_wndTabs.SetWindowPos(NULL, -1, -1, cx, cy, SWP_NOMOVE | SWP_NOACTIVATE | SWP_NOZORDER);
+}
 #endif //_DEBUG
 
 
