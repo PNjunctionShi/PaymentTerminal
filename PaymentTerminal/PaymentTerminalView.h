@@ -13,7 +13,7 @@
 //
 
 #pragma once
-
+#include "PaymentTabs.h"
 
 class CPaymentTerminalView : public CView
 {
@@ -26,11 +26,8 @@ protected: // 仅从序列化创建
 // 特性
 public:
 	CPaymentTerminalDoc* GetDocument() const;
-	CMFCTabCtrl m_wndTabs;
+	CPaymentTabs m_wndTabs;
 
-	CMFCListCtrl m_wndOrderList;
-	CMFCListCtrl m_wndMemberList;
-	CMFCListCtrl m_wndCouponList;
 // 操作
 public:
 
@@ -59,6 +56,8 @@ protected:
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	DECLARE_MESSAGE_MAP()
+public:
+	virtual void OnInitialUpdate();
 };
 
 #ifndef _DEBUG  // PaymentTerminalView.cpp 中的调试版本

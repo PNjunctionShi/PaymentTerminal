@@ -4,9 +4,12 @@
 //
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
-#define IDS_ORDERLIST_TAB               101
-#define IDS_MEMBERLIST_TAB              102
-#define IDS_COUPONLIST_TAB              103
+#define IDS_TAB_ORDERLIST               101
+#define IDS_TAB_MEMBERLIST              102
+#define IDS_TAB_COUPONLIST              103
+#define ID_LIST_ORDER                   104
+#define ID_LIST_COUPON                  105
+#define ID_LIST_MEMBER                  106
 #define IDB_WRITESMALL                  110
 #define IDB_WRITELARGE                  111
 #define IDB_MAIN                        112
