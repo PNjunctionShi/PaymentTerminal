@@ -150,6 +150,12 @@ int CPaymentTerminalView::OnCreate(LPCREATESTRUCT lpcs)
 		return -1;      // 未能创建
 	}
 
+	m_wndTabs.EnableAutoColor(FALSE);
+	m_wndTabs.SetTabBorderSize(0);
+	m_wndTabs.HideSingleTab(FALSE);
+	m_wndTabs.EnableTabSwap(FALSE);
+	m_wndTabs.ShowWindow(SW_SHOW);
+	m_wndTabs.SetActiveTabBoldFont(TRUE);
 	return 0;
 }
 
@@ -173,13 +179,8 @@ void CPaymentTerminalView::OnInitialUpdate()
 	CView::OnInitialUpdate();
 
 	//view选项卡风格设置
-	m_wndTabs.SetLocation(CMFCTabCtrl::LOCATION_TOP);
-	m_wndTabs.EnableAutoColor(FALSE);
-	m_wndTabs.SetTabBorderSize(0);
-	m_wndTabs.HideSingleTab(FALSE);
-	m_wndTabs.EnableTabSwap(FALSE);
-	m_wndTabs.ShowWindow(SW_SHOW);
-	m_wndTabs.SetActiveTabBoldFont(TRUE);
+	//m_wndTabs.SetLocation(CMFCTabCtrl::LOCATION_TOP);
+
 
 	//// TODO: 在此添加专用代码和/或调用基类
 }

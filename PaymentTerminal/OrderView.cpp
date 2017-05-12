@@ -33,6 +33,7 @@ BOOL COrderView::Create(CWnd* pParentWnd)
 }
 
 BEGIN_MESSAGE_MAP(COrderView, CDockablePane)
+	ON_WM_PAINT()
 END_MESSAGE_MAP()
 
 
@@ -40,3 +41,22 @@ END_MESSAGE_MAP()
 // COrderView 消息处理程序
 
 
+
+
+void COrderView::OnPaint()
+{
+	CPaintDC dc(this); // device context for painting
+					   // TODO: 在此处添加消息处理程序代码
+					   // 不为绘图消息调用 CDockablePane::OnPaint()
+	CMemDC memDC(dc, this);
+	CDC* pDC = &memDC.GetDC();
+
+	dc.GetClipBox(&m_rectCurrClip);
+
+	//OnDraw(pDC);
+
+	//if (memDC.IsMemDC())
+	//{
+	//	dc.ExcludeClipRect(m_rectWndArea);
+	//}
+}

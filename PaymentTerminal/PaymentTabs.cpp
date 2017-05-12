@@ -22,7 +22,7 @@ CPaymentTabs::~CPaymentTabs()
 
 BEGIN_MESSAGE_MAP(CPaymentTabs, CMFCTabCtrl)
 	ON_WM_CREATE()
-	ON_WM_SIZE()
+	//ON_WM_SIZE()
 END_MESSAGE_MAP()
 
 
@@ -39,18 +39,41 @@ int CPaymentTabs::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	CRect rectEmpty;
 	rectEmpty.SetRectEmpty();
-	const DWORD dwStyle = WS_CHILD | WS_VISIBLE | LVS_REPORT;
+	const DWORD dwStyle = WS_CHILD | WS_VISIBLE | LVS_REPORT | LVS_SHOWSELALWAYS | LVS_SINGLESEL;
 	if (!m_wndOrderList.Create(dwStyle, rectEmpty, this, ID_LIST_ORDER))
 	{
 		TRACE0("未能创建订单表格\n");
 		//return -1;      // 未能创建
 	}
 
+	m_wndOrderList.InsertColumn(0, _T("创建时间"),0,150);
+	m_wndOrderList.InsertColumn(1, _T("订单号"), 0, 150);
+	m_wndOrderList.InsertColumn(2, _T("收银员"), 0, 150);
+	m_wndOrderList.InsertColumn(3, _T("支付类型"), 0, 150);
+	m_wndOrderList.InsertColumn(4, _T("订单状态"), 0, 150);
+	m_wndOrderList.InsertColumn(5, _T("支付时间"), 0, 150);
+
+	//======================================================================================================
+	m_wndOrderList.InsertItem(0, _T("2017/5/12 21:06:24"));
+	m_wndOrderList.SetItemText(0, 1, _T("AA000001"));
+	m_wndOrderList.SetItemText(0, 2, _T("小红"));
+	m_wndOrderList.SetItemText(0, 3, _T("支付宝"));
+	m_wndOrderList.SetItemText(0, 4, _T("未支付"));
+
+	m_wndOrderList.InsertItem(1, _T("2017/5/12 21:18:21"));
+	m_wndOrderList.SetItemText(1, 1, _T("AA000002"));
+	m_wndOrderList.SetItemText(1, 2, _T("小明"));
+	m_wndOrderList.SetItemText(1, 3, _T("微信"));
+	m_wndOrderList.SetItemText(1, 4, _T("未支付"));
+	//======================================================================================================
+
+
 	if (!m_wndMemberList.Create(dwStyle, rectEmpty, this, ID_LIST_MEMBER))
 	{
 		TRACE0("未能创建会员表格\n");
 		//return -1;      // 未能创建
 	}
+	m_wndMemberList.InsertColumn(0, _T("创建时间"), 0, 150);
 
 	if (!m_wndCouponList.Create(dwStyle, rectEmpty, this, ID_LIST_COUPON))
 	{
@@ -74,16 +97,8 @@ int CPaymentTabs::OnCreate(LPCREATESTRUCT lpCreateStruct)
 }
 
 
-void CPaymentTabs::OnSize(UINT nType, int cx, int cy)
-{
-	CMFCTabCtrl::OnSize(nType, cx, cy);
-	CRect rectClient;
-	CRect rectDummy;
-	GetWindowRect(rectDummy);
-	GetClientRect(rectClient);
-	rectClient.top += 19;
-	m_wndOrderList.MoveWindow(rectClient);
-	m_wndMemberList.MoveWindow(rectClient);
-	m_wndCouponList.MoveWindow(rectClient);
-	// TODO: 在此处添加消息处理程序代码
-}
+//void CPaymentTabs::OnSize(UINT nType, int cx, int cy)
+//{
+//	CMFCTabCtrl::OnSize(nType, cx, cy);
+//	// TODO: 在此处添加消息处理程序代码
+//}
