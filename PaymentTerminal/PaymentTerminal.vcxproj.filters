@@ -69,6 +69,12 @@
     <ClInclude Include="PaymentList.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CommodityList.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticEx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PaymentTerminal.cpp">
@@ -117,6 +123,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="PaymentList.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CommodityList.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticEx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
