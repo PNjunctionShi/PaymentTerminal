@@ -72,7 +72,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;      // 未能创建
 	}
 
-	if (!m_wndOrderView.Create(this))
+	if (!m_wndOrderDockPane.Create(this))
 	{
 		TRACE0("未能创建订单视图\n");
 		return -1;      // 未能创建
@@ -91,8 +91,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 
 	CDockablePane* pTabbedBar = NULL;
-	m_wndMembershipView.AttachToTabWnd(&m_wndOrderView, DM_SHOW, TRUE, &pTabbedBar);
-	m_wndCouponView.AttachToTabWnd(&m_wndOrderView, DM_SHOW, TRUE, &pTabbedBar);
+	m_wndMembershipView.AttachToTabWnd(&m_wndOrderDockPane, DM_SHOW, TRUE, &pTabbedBar);
+	m_wndCouponView.AttachToTabWnd(&m_wndOrderDockPane, DM_SHOW, TRUE, &pTabbedBar);
 	CString strTitlePane1;
 	CString strTitlePane2;
 	bNameValid = strTitlePane1.LoadString(IDS_STATUS_PANE1);
@@ -306,7 +306,7 @@ void CMainFrame::OnUpdateFilePrintPreview(CCmdUI* pCmdUI)
 
 void CMainFrame::OnOrder()
 {
-	m_wndOrderView.ShowPane(m_wndOrderView.IsVisible()?FALSE:TRUE, FALSE, TRUE);
+	m_wndOrderDockPane.ShowPane(m_wndOrderDockPane.IsVisible()?FALSE:TRUE, FALSE, TRUE);
 	RecalcLayout(FALSE);
 	// TODO: 在此添加命令处理程序代码
 }
@@ -314,7 +314,7 @@ void CMainFrame::OnOrder()
 
 void CMainFrame::OnUpdateOrder(CCmdUI *pCmdUI)
 {
-	pCmdUI->SetCheck(m_wndOrderView.IsVisible());
+	pCmdUI->SetCheck(m_wndOrderDockPane.IsVisible());
 	// TODO: 在此添加命令更新用户界面处理程序代码
 }
 

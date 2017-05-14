@@ -8,9 +8,7 @@ class CStaticEx : public CStatic
 	DECLARE_DYNAMIC(CStaticEx)
 private:
 	CFont m_Font;
-	COLORREF m_clrText;
-	COLORREF m_clrBack;
-	CBrush m_brushBack;
+
 public:
 	CStaticEx();
 	virtual ~CStaticEx();
@@ -18,8 +16,10 @@ public:
 protected:
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	afx_msg HBRUSH CtlColor(CDC* /*pDC*/, UINT /*nCtlColor*/);
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 };
 
 

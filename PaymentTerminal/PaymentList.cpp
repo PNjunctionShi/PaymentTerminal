@@ -40,3 +40,4 @@ int CPaymentList::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	return 0;
 }
+

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -21,21 +21,21 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{60498E11-87AF-4834-94A1-EB3CEBB57C02}</ProjectGuid>
     <RootNamespace>PaymentTerminal</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
     <Keyword>MFCProj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
@@ -43,14 +43,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
@@ -190,35 +190,45 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Commodity.h" />
+    <ClInclude Include="CommodityList.h" />
     <ClInclude Include="Coupon.h" />
     <ClInclude Include="CouponView.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Member.h" />
     <ClInclude Include="MembershipView.h" />
     <ClInclude Include="Order.h" />
+    <ClInclude Include="OrderDockPane.h" />
     <ClInclude Include="OrderView.h" />
+    <ClInclude Include="PaymentList.h" />
     <ClInclude Include="PaymentRibbon.h" />
+    <ClInclude Include="PaymentTabs.h" />
     <ClInclude Include="PaymentTerminal.h" />
     <ClInclude Include="PaymentTerminalDoc.h" />
     <ClInclude Include="PaymentTerminalView.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="StaticEx.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Commodity.cpp" />
+    <ClCompile Include="CommodityList.cpp" />
     <ClCompile Include="Coupon.cpp" />
     <ClCompile Include="CouponView.cpp" />
     <ClCompile Include="Member.cpp" />
     <ClCompile Include="MembershipView.cpp" />
     <ClCompile Include="Order.cpp" />
+    <ClCompile Include="OrderDockPane.cpp" />
     <ClCompile Include="OrderView.cpp" />
+    <ClCompile Include="PaymentList.cpp" />
+    <ClCompile Include="PaymentTabs.cpp" />
     <ClCompile Include="Paywinverapi.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="PaymentRibbon.cpp" />
     <ClCompile Include="PaymentTerminal.cpp" />
     <ClCompile Include="PaymentTerminalDoc.cpp" />
     <ClCompile Include="PaymentTerminalView.cpp" />
+    <ClCompile Include="StaticEx.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

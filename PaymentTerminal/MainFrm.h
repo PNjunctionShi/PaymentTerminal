@@ -16,7 +16,7 @@
 #include "PaymentRibbon.h"
 #include "CouponView.h"
 #include "MembershipView.h"
-#include "OrderView.h"
+#include "OrderDockPane.h"
 
 class CMainFrame : public CFrameWndEx
 {
@@ -50,7 +50,7 @@ protected:  // 控件条嵌入成员
 	CMFCRibbonStatusBar  m_wndStatusBar;
 	CMFCCaptionBar    m_wndCaptionBar;
 	CCouponView m_wndCouponView;
-	COrderView m_wndOrderView;
+	COrderDockPane m_wndOrderDockPane;
 	CMembershipView m_wndMembershipView;
 
 // 生成的消息映射函数

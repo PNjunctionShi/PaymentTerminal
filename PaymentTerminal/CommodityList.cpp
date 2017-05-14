@@ -22,6 +22,7 @@ CCommodityList::~CCommodityList()
 
 BEGIN_MESSAGE_MAP(CCommodityList, CMFCListCtrl)
 	ON_WM_CREATE()
+	ON_WM_NCCALCSIZE()
 END_MESSAGE_MAP()
 
 
@@ -36,7 +37,16 @@ int CCommodityList::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CMFCListCtrl::OnCreate(lpCreateStruct) == -1)
 		return -1;
 	SetExtendedStyle(LVS_EX_FULLROWSELECT);
+	InitializeFlatSB(this->m_hWnd);
+	FlatSB_EnableScrollBar(this->m_hWnd, SB_BOTH, ESB_DISABLE_BOTH);
 	// TODO:  在此添加您专用的创建代码
-
 	return 0;
+}
+
+
+void CCommodityList::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS* lpncsp)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	ModifyStyle(WS_HSCROLL | WS_VSCROLL, 0); // 去掉水平滚动条和竖直滚动条
+	CMFCListCtrl::OnNcCalcSize(bCalcValidRects, lpncsp);
 }

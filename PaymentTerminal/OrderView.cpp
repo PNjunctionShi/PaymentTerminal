@@ -8,9 +8,10 @@
 
 // COrderView
 
-IMPLEMENT_DYNAMIC(COrderView, CDockablePane)
+IMPLEMENT_DYNCREATE(COrderView, CFormView)
 
 COrderView::COrderView()
+	: CFormView(IDD_ORDERVIEW)
 {
 
 }
@@ -19,69 +20,57 @@ COrderView::~COrderView()
 {
 }
 
-BOOL COrderView::Create(CWnd* pParentWnd)
+void COrderView::DoDataExchange(CDataExchange* pDX)
 {
-	if (!CDockablePane::Create(_T("订单"), pParentWnd, CSize(100,100), TRUE, ID_ORDER_VIEW, WS_CHILD | WS_VISIBLE | CBRS_RIGHT | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, AFX_CBRS_REGULAR_TABS, AFX_DEFAULT_DOCKING_PANE_STYLE))
-	{
-		TRACE0("未能创建状态栏\n");
-		return FALSE;      // 未能创建
-	}
-	EnableDocking(CBRS_ALIGN_ANY);
-	((CFrameWndEx*)pParentWnd)->DockPane(this);
-	return TRUE;
-	
+	CFormView::DoDataExchange(pDX);
 }
 
-BEGIN_MESSAGE_MAP(COrderView, CDockablePane)
-	//ON_WM_PAINT()
+BEGIN_MESSAGE_MAP(COrderView, CFormView)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
+	ON_WM_MOUSEACTIVATE()
 END_MESSAGE_MAP()
 
+
+// COrderView 诊断
+
+#ifdef _DEBUG
+void COrderView::AssertValid() const
+{
+	CFormView::AssertValid();
+}
+
+#ifndef _WIN32_WCE
+void COrderView::Dump(CDumpContext& dc) const
+{
+	CFormView::Dump(dc);
+}
+#endif
+#endif //_DEBUG
 
 
 // COrderView 消息处理程序
 
 
-
-
-//void COrderView::OnPaint()
-//{
-//	CPaintDC dc(this); // device context for painting
-//					   // TODO: 在此处添加消息处理程序代码
-//					   // 不为绘图消息调用 CDockablePane::OnPaint()
-//	CMemDC memDC(dc, this);
-//	CDC* pDC = &memDC.GetDC();
-//
-//	dc.GetClipBox(&m_rectCurrClip);
-//
-//	//OnDraw(pDC);
-//
-//	//if (memDC.IsMemDC())
-//	//{
-//	//	dc.ExcludeClipRect(m_rectWndArea);
-//	//}
-//}
-
-
 int COrderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if (CDockablePane::OnCreate(lpCreateStruct) == -1)
+	if (CFormView::OnCreate(lpCreateStruct) == -1)
 		return -1;
+
 	CRect rectEmpty;
 	rectEmpty.SetRectEmpty();
-
-	if (m_wndShopNameStatic.Create(_T("天上人间"),WS_CHILD|WS_VISIBLE, rectEmpty,this,1)==0 ||
-		m_wndShopAddrStatic.Create(_T("天鹅座，开普勒-186F"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 || 
+	//m_wndBaseplate.Create(_T("小票"),
+	if (m_wndShopNameStatic.Create(_T("天上人间"), WS_CHILD | WS_VISIBLE | SS_CENTER | SS_CENTERIMAGE, rectEmpty, this, 1) == 0 ||
+		m_wndShopAddrStatic.Create(_T("天鹅座，开普勒-186F"), WS_CHILD | WS_VISIBLE | SS_CENTER | SS_CENTERIMAGE, rectEmpty, this, 1) == 0 ||
 		m_wndDevider1Static.Create(_T("*******************"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
 		m_wndDevider2Static.Create(_T("*      结账联     *"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
 		m_wndDevider3Static.Create(_T("*******************"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
 		m_wndOrderTimeStatic.Create(_T("2017/5/13 17:07:15"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
 		m_wndSeriesStatic.Create(_T("AA00000003"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
 		m_wndTotalStatic.Create(_T("合计： ￥1000000.00"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
-		m_wndChargeStatic.Create(_T("支付宝收取： ￥1000000.00"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 || 
-		m_wndChangeStatic.Create(_T("支付宝找零： ￥0.00"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 || 
-		m_wndCashier.Create(_T("收银员： 习近平"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 || 
+		m_wndChargeStatic.Create(_T("支付宝收取： ￥1000000.00"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
+		m_wndChangeStatic.Create(_T("支付宝找零： ￥0.00"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
+		m_wndCashier.Create(_T("收银员： 习近平"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
 		m_wndTelephone.Create(_T("联系电话：000-1234567"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0)
 	{
 		TRACE0("未能创建小票表头\n");
@@ -94,6 +83,7 @@ int COrderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		TRACE0("未能创建商品列表\n");
 		return -1;      // 未能创建
 	}
+	//m_wndCommodityList.SetScrollInfo()
 	m_wndCommodityList.InsertColumn(0, _T("序号"), 0, 100);
 	m_wndCommodityList.InsertColumn(1, _T("商品名称"), 0, 100);
 	m_wndCommodityList.InsertColumn(2, _T("单价"), 0, 100);
@@ -114,7 +104,7 @@ int COrderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void COrderView::OnSize(UINT nType, int cx, int cy)
 {
-	CDockablePane::OnSize(nType, cx, cy);
+	CFormView::OnSize(nType, cx, cy);
 	CRect rectClient;
 	GetClientRect(&rectClient);
 
@@ -125,11 +115,48 @@ void COrderView::OnSize(UINT nType, int cx, int cy)
 	rectHeader.bottom = 100;
 	m_wndShopNameStatic.MoveWindow(rectHeader);
 
-	
+
 	rectClient.top += 100;
 	rectClient.bottom -= 100;
 	rectClient.left += 20;
 	rectClient.right -= 20;
 	m_wndCommodityList.MoveWindow(rectClient);
 	// TODO: 在此处添加消息处理程序代码
+}
+
+
+BOOL COrderView::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext)
+{
+	// TODO: 在此添加专用代码和/或调用基类
+
+	return CFormView::Create(lpszClassName, lpszWindowName, dwStyle, rect, pParentWnd, nID, pContext);
+}
+
+
+int COrderView::OnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT message)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	int nResult = 0;
+
+	CFrameWnd* pParentFrame = GetParentFrame();
+
+	if (pParentFrame == pDesktopWnd)
+	{
+		// When this is docked
+		nResult = CFormView::OnMouseActivate(pDesktopWnd, nHitTest, message);
+	}
+	else
+	{
+		// When this is not docked
+
+		BOOL isMiniFrameWnd = pDesktopWnd->IsKindOf(RUNTIME_CLASS(CMiniFrameWnd));
+		BOOL isPaneFrameWnd = pDesktopWnd->IsKindOf(RUNTIME_CLASS(CPaneFrameWnd));
+		BOOL isMultiPaneFrameWnd = pDesktopWnd->IsKindOf(RUNTIME_CLASS(CMultiPaneFrameWnd));
+
+		// pDesktopWnd is the frame window for CDockablePane
+
+		nResult = CWnd::OnMouseActivate(pDesktopWnd, nHitTest, message);
+		//return CFormView::OnMouseActivate(pDesktopWnd, nHitTest, message);
+	}
+	return nResult;
 }
