@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by PaymentTerminal.rc
+// Microsoft Visual C++ 生成的包含文件。
+// 供 PaymentTerminal.rc 使用
 //
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
@@ -47,7 +47,10 @@
 #define ID_COUPON_VIEW                  224
 #define IDB_INFO                        230
 #define IDS_CAPTION_BUTTON              231
+#define IDB_MAIN_LARGE                  231
 #define IDS_CAPTION_BUTTON_TIP          232
+#define IDB_MAIN_LARGE1                 232
+#define IDB_ORDER_LARGE                 232
 #define IDS_CAPTION_TEXT                233
 #define IDS_CAPTION_IMAGE_TIP           234
 #define IDS_CAPTION_IMAGE_TEXT          235
@@ -72,13 +75,19 @@
 #define ID_Membership                   32774
 #define ID_CHECK5                       32775
 #define ID_Coupon                       32775
+#define ID_NEW_ORDER                    32776
+#define ID_CNTX_ORDER                   32777
+#define ID_COMBO2                       32778
+#define ID_BTN_PAY                      32779
+#define ID_BTN_COMMIT                   32780
+#define ID_BTN_CANCEL                   32781
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        311
-#define _APS_NEXT_COMMAND_VALUE         32776
+#define _APS_NEXT_COMMAND_VALUE         32782
 #define _APS_NEXT_CONTROL_VALUE         1013
 #define _APS_NEXT_SYMED_VALUE           311
 #endif

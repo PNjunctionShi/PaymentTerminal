@@ -100,6 +100,10 @@ IDB_BUTTONS             BITMAP                  "res\\buttons.bmp"
 
 IDB_INFO                BITMAP                  "res\\info.bmp"
 
+IDB_MAIN_LARGE          BITMAP                  "res\\writelar.bmp"
+
+IDB_ORDER_LARGE         BITMAP                  "res\\main_lar.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //

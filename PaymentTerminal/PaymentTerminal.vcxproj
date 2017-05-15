@@ -250,10 +250,12 @@
     <Image Include="res\filesmall.bmp" />
     <Image Include="res\info.bmp" />
     <Image Include="res\main.bmp" />
+    <Image Include="res\main_lar.bmp" />
     <Image Include="res\PaymentTerminal.ico" />
     <Image Include="res\PaymentTerminalDoc.ico" />
     <Image Include="res\Toolbar.bmp" />
     <Image Include="res\Toolbar256.bmp" />
+    <Image Include="res\writelar.bmp" />
     <Image Include="res\writelarge.bmp" />
     <Image Include="res\writesmall.bmp" />
   </ItemGroup>
