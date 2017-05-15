@@ -50,3 +50,14 @@ void CCommodityList::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS* lpncs
 	ModifyStyle(WS_HSCROLL | WS_VSCROLL, 0); // 去掉水平滚动条和竖直滚动条
 	CMFCListCtrl::OnNcCalcSize(bCalcValidRects, lpncsp);
 }
+
+int CCommodityList::CalcHeight()
+{
+	CRect rectHeader;
+	GetHeaderCtrl().GetWindowRect(rectHeader);
+	CRect rectItem;
+	GetItemRect(0, rectItem, LVIR_BOUNDS);
+	int nItem;
+	nItem = GetItemCount();
+	return rectHeader.Height() + nItem*rectItem.Height();
+}

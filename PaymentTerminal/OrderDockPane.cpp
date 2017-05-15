@@ -48,7 +48,7 @@ int COrderDockPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 	CRect rectDummy;
 	rectDummy.SetRectEmpty();
-	m_pBaseplate->Create(NULL, NULL, WS_CHILD | WS_VISIBLE, rectDummy, this, NULL, NULL);
+	m_pBaseplate->Create(NULL, NULL, WS_CHILD | WS_VISIBLE, rectDummy, this, IDD_ORDERVIEW, NULL);
 	// TODO:  在此添加您专用的创建代码
 
 	return 0;

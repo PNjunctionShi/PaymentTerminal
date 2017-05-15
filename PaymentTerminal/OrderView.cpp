@@ -11,7 +11,19 @@
 IMPLEMENT_DYNCREATE(COrderView, CFormView)
 
 COrderView::COrderView()
-	: CFormView(IDD_ORDERVIEW)
+	: CFormView(IDD_ORDERVIEW), 
+	m_wndShopNameStatic(30,ALIGN::CENTER),
+	m_wndShopAddrStatic(20, ALIGN::CENTER),
+	m_wndDevider1Static(20, ALIGN::CENTER),
+	m_wndDevider2Static(20, ALIGN::CENTER),
+	m_wndDevider3Static(20, ALIGN::CENTER),
+	m_wndOrderTimeStatic(20, ALIGN::LEFT),
+	m_wndSeriesStatic(20, ALIGN::RIGHT),
+	m_wndTotalStatic(25, ALIGN::LEFT),
+	m_wndChargeStatic(20, ALIGN::LEFT),
+	m_wndChangeStatic(20, ALIGN::LEFT),
+	m_wndCashier(20, ALIGN::CENTER),
+	m_wndTelephone(20, ALIGN::CENTER)
 {
 
 }
@@ -29,6 +41,7 @@ BEGIN_MESSAGE_MAP(COrderView, CFormView)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_MOUSEACTIVATE()
+	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
 
@@ -59,9 +72,8 @@ int COrderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	CRect rectEmpty;
 	rectEmpty.SetRectEmpty();
-	//m_wndBaseplate.Create(_T("小票"),
 	if (m_wndShopNameStatic.Create(_T("天上人间"), WS_CHILD | WS_VISIBLE | SS_CENTER | SS_CENTERIMAGE, rectEmpty, this, 1) == 0 ||
-		m_wndShopAddrStatic.Create(_T("天鹅座，开普勒-186F"), WS_CHILD | WS_VISIBLE | SS_CENTER | SS_CENTERIMAGE, rectEmpty, this, 1) == 0 ||
+		m_wndShopAddrStatic.Create(_T("天鹅座，开普勒-186F，东经253度北纬46度，伽利略区，星际大道，4259号"), WS_CHILD | WS_VISIBLE | SS_CENTER | SS_CENTERIMAGE, rectEmpty, this, 1) == 0 ||
 		m_wndDevider1Static.Create(_T("*******************"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
 		m_wndDevider2Static.Create(_T("*      结账联     *"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
 		m_wndDevider3Static.Create(_T("*******************"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
@@ -104,31 +116,15 @@ int COrderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void COrderView::OnSize(UINT nType, int cx, int cy)
 {
-	CFormView::OnSize(nType, cx, cy);
-	CRect rectClient;
-	GetClientRect(&rectClient);
-
-	CRect rectHeader;
-	rectHeader = rectClient;
-	rectHeader.left += 20;
-	rectHeader.right -= 20;
-	rectHeader.bottom = 100;
-	m_wndShopNameStatic.MoveWindow(rectHeader);
-
-
-	rectClient.top += 100;
-	rectClient.bottom -= 100;
-	rectClient.left += 20;
-	rectClient.right -= 20;
-	m_wndCommodityList.MoveWindow(rectClient);
-	// TODO: 在此处添加消息处理程序代码
+	//CFormView::OnSize(nType, cx, cy);
+	ReCalcLayout();
+	Invalidate();
 }
 
 
 BOOL COrderView::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext)
 {
 	// TODO: 在此添加专用代码和/或调用基类
-
 	return CFormView::Create(lpszClassName, lpszWindowName, dwStyle, rect, pParentWnd, nID, pContext);
 }
 
@@ -159,4 +155,119 @@ int COrderView::OnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT message)
 		//return CFormView::OnMouseActivate(pDesktopWnd, nHitTest, message);
 	}
 	return nResult;
+}
+
+void COrderView::ReCalcLayout()
+{
+	CSize sizeScroll;
+	GetScrollBarSizes(sizeScroll);
+	CRect rectClient;
+	GetClientRect(rectClient);
+	
+	if (rectClient.Width()<m_nMinWidth)
+	{
+		sizeScroll.cx = m_nMinWidth;
+	}
+	else if (rectClient.Width() >= m_nMinWidth)
+	{
+		sizeScroll.cx = rectClient.Width();
+	}
+	sizeScroll.cy = 0;
+
+	int margin = 30;
+	int nReceiptWidth = sizeScroll.cx-margin*2;
+	int nShopNameHeight = m_wndShopNameStatic.CalcHeight(nReceiptWidth);
+	
+	int Xoffset = margin;
+	int Yoffset = margin;
+	m_wndShopNameStatic.MoveWindow(Xoffset, Yoffset, nReceiptWidth, nShopNameHeight, TRUE);
+
+	Yoffset += nShopNameHeight + 7;
+	int nShopAddrHeight = m_wndShopAddrStatic.CalcHeight(nReceiptWidth);
+	m_wndShopAddrStatic.MoveWindow(Xoffset, Yoffset, nReceiptWidth, nShopAddrHeight, TRUE);
+
+	Yoffset += nShopAddrHeight + 7;
+	int nDevider1Height = m_wndDevider1Static.FitDevider3(nReceiptWidth, '*', _T("结账联"));
+	m_wndDevider1Static.Invalidate(TRUE);
+	m_wndDevider1Static.MoveWindow(Xoffset, Yoffset, nReceiptWidth, nDevider1Height, TRUE);
+
+	Yoffset += nDevider1Height + 10;
+	int nOrderTimeWidth = nReceiptWidth / 3+40;
+	int nOrderTimeHeight = m_wndOrderTimeStatic.CalcHeight(nOrderTimeWidth);
+	m_wndOrderTimeStatic.MoveWindow(Xoffset, Yoffset, nOrderTimeWidth, nOrderTimeHeight, TRUE);
+
+	Xoffset += nOrderTimeWidth;
+	int nCashierWidth = nReceiptWidth / 3;
+	int nCashierHeight = m_wndCashier.CalcHeight(nCashierWidth);
+	m_wndCashier.MoveWindow(Xoffset, Yoffset, nCashierWidth, nCashierHeight, TRUE);
+
+	Xoffset += nCashierWidth;
+	int nSeriesWidth = nReceiptWidth / 3-40;
+	int nSeriesHeight = m_wndSeriesStatic.CalcHeight(nSeriesWidth);
+	m_wndSeriesStatic.MoveWindow(Xoffset, Yoffset, nSeriesWidth, nSeriesHeight, TRUE);
+
+	Yoffset += max(nOrderTimeHeight, max(nCashierHeight, nSeriesHeight))+7;
+	Xoffset = margin;
+	int nCommodityListHeight=m_wndCommodityList.CalcHeight();
+	m_wndCommodityList.MoveWindow(Xoffset, Yoffset, nReceiptWidth, nCommodityListHeight, TRUE);
+
+	Yoffset += nCommodityListHeight+10;
+	int nTotalHeight = m_wndTotalStatic.CalcHeight(nReceiptWidth);
+	m_wndTotalStatic.MoveWindow(Xoffset, Yoffset, nReceiptWidth, nTotalHeight, TRUE);
+
+	Yoffset += nTotalHeight+10;
+	int nChargeHeight = m_wndChargeStatic.CalcHeight(nReceiptWidth);
+	m_wndChargeStatic.MoveWindow(Xoffset, Yoffset, nReceiptWidth, nChargeHeight, TRUE);
+
+	Yoffset += nChargeHeight+7;
+	int nChangeHeight = m_wndChangeStatic.CalcHeight(nReceiptWidth);
+	m_wndChangeStatic.MoveWindow(Xoffset, Yoffset, nReceiptWidth, nChangeHeight, TRUE);
+
+	Yoffset += nChangeHeight+7;
+	int nDevider2Height = m_wndDevider2Static.FitDevider1(nReceiptWidth, '-');
+	m_wndDevider2Static.Invalidate(TRUE);
+	m_wndDevider2Static.MoveWindow(Xoffset, Yoffset, nReceiptWidth, nDevider2Height, TRUE);
+
+	Yoffset += nDevider2Height;
+	int nTelephoneHeight = m_wndTelephone.CalcHeight(nReceiptWidth);
+	m_wndTelephone.MoveWindow(Xoffset, Yoffset, nReceiptWidth, nTelephoneHeight, TRUE);
+	
+	Yoffset += nTelephoneHeight;
+
+	sizeScroll.cy = Yoffset+margin;
+	SetScrollSizes(MM_TEXT, sizeScroll);
+
+
+	m_rectOutline.left = 10;
+	m_rectOutline.top = 10;
+	m_rectOutline.right = sizeScroll.cx - 10;
+	m_rectOutline.bottom = sizeScroll.cy - 10;
+}
+
+void COrderView::OnDraw(CDC* pDC)
+{
+	// TODO: 在此添加专用代码和/或调用基类
+
+	CBrush brushBack(RGB(100, 100, 100));
+	CBrush brushFore(RGB(255, 255, 255));
+	CPen penOutline(PS_SOLID, 1, RGB(0, 0, 0));
+	//Invalidate();
+	CRect rectClient;
+	GetClientRect(rectClient);
+
+	CPoint ptScroll = GetScrollPosition();
+	rectClient.OffsetRect(ptScroll);
+	pDC->FillRect(rectClient, &brushBack);
+	pDC->SelectObject(&penOutline);
+	pDC->SelectObject(&brushFore);
+	pDC->Rectangle(m_rectOutline);
+}
+
+
+
+BOOL COrderView::OnEraseBkgnd(CDC* pDC)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	return TRUE;
+	/*return CFormView::OnEraseBkgnd(pDC);*/
 }

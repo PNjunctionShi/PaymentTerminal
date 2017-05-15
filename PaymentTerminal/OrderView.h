@@ -22,6 +22,8 @@ private:
 	CStaticEx m_wndCashier;
 	CStaticEx m_wndTelephone;
 	CCommodityList m_wndCommodityList;
+	CRect m_rectOutline;
+	int m_nMinWidth=500;
 protected:
 	COrderView();           // 动态创建所使用的受保护的构造函数
 	virtual ~COrderView();
@@ -46,6 +48,9 @@ public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	virtual BOOL Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext = NULL);
 	afx_msg int OnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT message);
+	virtual void ReCalcLayout();
+	virtual void OnDraw(CDC* pDC);
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 };
 
 
