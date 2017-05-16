@@ -5,7 +5,7 @@
 class COrderDockPane : public CDockablePane
 {
 	DECLARE_DYNAMIC(COrderDockPane)
-private:
+public:
 	COrderView* m_pBaseplate;
 
 public:

@@ -2,8 +2,9 @@
 #include "Commodity.h"
 enum EPaymentType
 {
-	Alipay=1,
-	Wechat=2
+	Cash = 1,
+	Alipay=2,
+	Wechat=3
 };
 
 enum EOrderStatus
@@ -17,6 +18,7 @@ enum EOrderStatus
 class COrder : public CObject
 {
 	friend class CMainFrame;
+	friend class COrderView;
 public:
 	COrder(CString strSeries=_T(""), CString strCashier=_T(""), EPaymentType ePayType=EPaymentType::Alipay );
 	virtual ~COrder();

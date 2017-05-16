@@ -8,7 +8,7 @@ class COrderView : public CFormView
 {
 	DECLARE_DYNCREATE(COrderView)
 	
-private:
+public:
 	CStaticEx m_wndShopNameStatic;
 	CStaticEx m_wndShopAddrStatic;
 	CStaticEx m_wndDevider1Static;

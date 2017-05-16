@@ -18,13 +18,17 @@
 #include "MembershipView.h"
 #include "OrderDockPane.h"
 #include "Order.h"
+#include "Operator.h"
 
 class CMainFrame : public CFrameWndEx
 {
-private:
+public:
 	COrder* m_pSelectedOrder;
 	CTime m_timeLasttime;
 	int m_nSubSeries;
+	COperator m_Operator;
+	CString m_strShopName;
+	CString m_strShopAddr;
 
 protected: // 仅从序列化创建
 	CMainFrame();

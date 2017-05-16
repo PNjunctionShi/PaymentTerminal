@@ -196,6 +196,7 @@
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Member.h" />
     <ClInclude Include="MembershipView.h" />
+    <ClInclude Include="Operator.h" />
     <ClInclude Include="Order.h" />
     <ClInclude Include="OrderDockPane.h" />
     <ClInclude Include="OrderView.h" />
@@ -217,6 +218,7 @@
     <ClCompile Include="CouponView.cpp" />
     <ClCompile Include="Member.cpp" />
     <ClCompile Include="MembershipView.cpp" />
+    <ClCompile Include="Operator.cpp" />
     <ClCompile Include="Order.cpp" />
     <ClCompile Include="OrderDockPane.cpp" />
     <ClCompile Include="OrderView.cpp" />

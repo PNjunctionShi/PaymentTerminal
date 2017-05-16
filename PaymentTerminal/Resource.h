@@ -62,11 +62,13 @@
 #define IDC_STATIC_SHOPADDR             1004
 #define IDC_STATIC_ORDERTIME            1005
 #define IDC_STATIC_ORDERSERIES          1006
+#define IDC_STATIC_SERIES               1006
 #define IDC_LIST_COMMODITY              1007
 #define IDC_STATIC_TOTAL                1008
 #define IDC_STATIC_CHARGE               1009
 #define IDC_STATIC_CHANGE               1010
 #define IDC_STATIC_DIVIDER1             1011
+#define IDC_STATIC_CASHIER              1011
 #define IDC_STATIC_DIVIDER2             1012
 #define IDC_STATIC_CHANGE2              1013
 #define IDC_STATIC_TELEPHONE            1013

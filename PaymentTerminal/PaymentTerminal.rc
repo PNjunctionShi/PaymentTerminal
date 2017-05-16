@@ -517,6 +517,23 @@ BEGIN
     IDS_EDIT_MENU           "编辑"
 END
 
+STRINGTABLE
+BEGIN
+    IDC_STATIC_SHOPNAME     "店铺名称"
+    IDC_STATIC_SHOPADDR     "店铺地址"
+    IDC_STATIC_ORDERTIME    "订单生成时间"
+    IDC_STATIC_SERIES       "订单序列号"
+END
+
+STRINGTABLE
+BEGIN
+    IDC_STATIC_TOTAL        "订单总计"
+    IDC_STATIC_CHARGE       "收取金额"
+    IDC_STATIC_CHANGE       "找零金额"
+    IDC_STATIC_CASHIER      "收银员名称"
+    IDC_STATIC_TELEPHONE    "店铺联系电话"
+END
+
 #endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////
 

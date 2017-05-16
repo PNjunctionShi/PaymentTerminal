@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "PaymentTerminal.h"
 #include "OrderView.h"
-
+#include "MainFrm.h"
 
 // COrderView
 
@@ -35,6 +35,7 @@ COrderView::~COrderView()
 void COrderView::DoDataExchange(CDataExchange* pDX)
 {
 	CFormView::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_STATIC_SHOPNAME, m_wndShopNameStatic);
 }
 
 BEGIN_MESSAGE_MAP(COrderView, CFormView)
@@ -72,7 +73,7 @@ int COrderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	CRect rectEmpty;
 	rectEmpty.SetRectEmpty();
-	if (m_wndShopNameStatic.Create(_T("天上人间"), WS_CHILD | WS_VISIBLE | SS_CENTER | SS_CENTERIMAGE, rectEmpty, this, 1) == 0 ||
+	if (m_wndShopNameStatic.Create(_T("天上人间"), WS_CHILD | WS_VISIBLE | SS_CENTER | SS_CENTERIMAGE, rectEmpty, this,IDC_STATIC_SHOPNAME) == 0 ||
 		m_wndShopAddrStatic.Create(_T("天鹅座，开普勒-186F，东经253度北纬46度，伽利略区，星际大道，4259号"), WS_CHILD | WS_VISIBLE | SS_CENTER | SS_CENTERIMAGE, rectEmpty, this, 1) == 0 ||
 		m_wndDevider1Static.Create(_T("*******************"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
 		m_wndDevider2Static.Create(_T("*      结账联     *"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||

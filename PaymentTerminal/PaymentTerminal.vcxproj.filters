@@ -78,6 +78,9 @@
     <ClInclude Include="OrderView.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Operator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PaymentTerminal.cpp">
@@ -135,6 +138,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="OrderView.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Operator.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
