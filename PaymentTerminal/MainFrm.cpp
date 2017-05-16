@@ -42,6 +42,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_UPDATE_COMMAND_UI(ID_Coupon, &CMainFrame::OnUpdateCoupon)
 	ON_COMMAND(ID_Membership, &CMainFrame::OnMembership)
 	ON_UPDATE_COMMAND_UI(ID_Membership, &CMainFrame::OnUpdateMembership)
+	ON_COMMAND(ID_NEW_ORDER, &CMainFrame::OnNewOrder)
 END_MESSAGE_MAP()
 
 // CMainFrame 构造/析构
@@ -346,4 +347,34 @@ void CMainFrame::OnUpdateMembership(CCmdUI *pCmdUI)
 {
 	pCmdUI->SetCheck(m_wndMembershipView.IsVisible());
 	// TODO: 在此添加命令更新用户界面处理程序代码
+}
+
+
+void CMainFrame::OnNewOrder()
+{
+	m_pSelectedOrder = (COrder*)(RUNTIME_CLASS(COrder)->CreateObject());
+	m_pSelectedOrder->m_timOrderTime = CTime::GetCurrentTime();
+	m_pSelectedOrder->m_strSeries = GenerateSeries();
+	// TODO: 在此添加命令处理程序代码
+}
+
+
+CString CMainFrame::GenerateSeries()
+{
+	CTime now = CTime::GetCurrentTime();
+	if (now.GetYear() == m_timeLasttime.GetYear() &&
+		now.GetMonth() == m_timeLasttime.GetMonth() &&
+		now.GetDay() == m_timeLasttime.GetDay())
+	{
+		m_nSubSeries++;
+	}
+	else
+	{
+		m_timeLasttime = now;
+		m_nSubSeries = 0;
+	}
+	CString strSubSeries;
+	strSubSeries.Format(_T("%04d"), m_nSubSeries);
+	CString strDate = now.Format(_T("%y%m%d"));
+	return strDate+ strSubSeries;
 }

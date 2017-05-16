@@ -16,6 +16,7 @@ enum EOrderStatus
 
 class COrder : public CObject
 {
+	friend class CMainFrame;
 public:
 	COrder(CString strSeries=_T(""), CString strCashier=_T(""), EPaymentType ePayType=EPaymentType::Alipay );
 	virtual ~COrder();

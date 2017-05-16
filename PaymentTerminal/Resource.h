@@ -81,13 +81,25 @@
 #define ID_BTN_PAY                      32779
 #define ID_BTN_COMMIT                   32780
 #define ID_BTN_CANCEL                   32781
+#define ID_BTN_CASH                     32782
+#define ID_BTN_WECHAT                   32783
+#define ID_BTN_ALIPAY                   32784
+#define ID_EDIT2                        32787
+#define ID_SPIN2                        32788
+#define ID_SPIN3                        32789
+#define ID_BUTTON7                      32792
+#define ID_BUTTON10                     32795
+#define ID_BUTTON11                     32796
+#define ID_EDIT3                        32797
+#define ID_BUTTON12                     32798
+#define ID_CONTEXT2                     32799
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        311
-#define _APS_NEXT_COMMAND_VALUE         32782
+#define _APS_NEXT_COMMAND_VALUE         32800
 #define _APS_NEXT_CONTROL_VALUE         1013
 #define _APS_NEXT_SYMED_VALUE           311
 #endif

@@ -251,6 +251,7 @@
     <Image Include="res\info.bmp" />
     <Image Include="res\main.bmp" />
     <Image Include="res\main_lar.bmp" />
+    <Image Include="res\orderlarge.bmp" />
     <Image Include="res\PaymentTerminal.ico" />
     <Image Include="res\PaymentTerminalDoc.ico" />
     <Image Include="res\Toolbar.bmp" />

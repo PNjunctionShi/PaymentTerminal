@@ -17,10 +17,15 @@
 #include "CouponView.h"
 #include "MembershipView.h"
 #include "OrderDockPane.h"
+#include "Order.h"
 
 class CMainFrame : public CFrameWndEx
 {
-	
+private:
+	COrder* m_pSelectedOrder;
+	CTime m_timeLasttime;
+	int m_nSubSeries;
+
 protected: // 仅从序列化创建
 	CMainFrame();
 	DECLARE_DYNCREATE(CMainFrame)
@@ -74,6 +79,8 @@ public:
 	afx_msg void OnUpdateCoupon(CCmdUI *pCmdUI);
 	afx_msg void OnMembership();
 	afx_msg void OnUpdateMembership(CCmdUI *pCmdUI);
+	afx_msg void OnNewOrder();
+	CString GenerateSeries();
 };
 
 
