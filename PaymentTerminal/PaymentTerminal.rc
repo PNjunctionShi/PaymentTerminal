@@ -372,6 +372,8 @@ BEGIN
     ID_LIST_ORDER           "订单列表"
     ID_LIST_COUPON          "卡券列表"
     ID_LIST_MEMBER          "会员列表"
+    IDC_STATIC_DEVIDER1     "订单分隔符1，结账联"
+    IDC_STATIC_DEVIDER2     "订单分隔符2"
 END
 
 STRINGTABLE

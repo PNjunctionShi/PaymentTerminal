@@ -24,7 +24,7 @@ class CMainFrame : public CFrameWndEx
 {
 public:
 	COrder* m_pSelectedOrder;
-	CTime m_timeLasttime;
+	COleDateTime m_timeLasttime;
 	int m_nSubSeries;
 	COperator m_Operator;
 	CString m_strShopName;

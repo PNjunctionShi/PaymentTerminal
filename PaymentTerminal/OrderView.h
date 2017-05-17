@@ -13,7 +13,6 @@ public:
 	CStaticEx m_wndShopAddrStatic;
 	CStaticEx m_wndDevider1Static;
 	CStaticEx m_wndDevider2Static;
-	CStaticEx m_wndDevider3Static;
 	CStaticEx m_wndOrderTimeStatic;
 	CStaticEx m_wndSeriesStatic;
 	CStaticEx m_wndTotalStatic;

@@ -4,18 +4,18 @@
 #include "stdafx.h"
 #include "PaymentTerminal.h"
 #include "Order.h"
-
+#include "MainFrm.h"
 
 // COrder
 
-COrder::COrder(CString strSeries , CString strCashier, EPaymentType ePayType)
+COrder::COrder()
 {
-	m_timOrderTime = ::GetCurrentTime();
-	m_strSeries = strSeries;
-	m_strCashier = strCashier;
-	m_ePayType = ePayType;
+	m_timOrderTime=time(NULL);
+	m_strSeries = _T("");
+	m_strCashier = _T("");
+	m_ePayType = EPaymentType::Cash;
 	m_eOrderStatus = EOrderStatus::UNPAIED;
-	m_timPayTime = 0;
+	m_timPayTime = time(NULL);
 	m_listCommodity.RemoveAll();
 }
 

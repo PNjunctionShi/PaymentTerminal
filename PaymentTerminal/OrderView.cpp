@@ -16,7 +16,6 @@ COrderView::COrderView()
 	m_wndShopAddrStatic(20, ALIGN::CENTER),
 	m_wndDevider1Static(20, ALIGN::CENTER),
 	m_wndDevider2Static(20, ALIGN::CENTER),
-	m_wndDevider3Static(20, ALIGN::CENTER),
 	m_wndOrderTimeStatic(20, ALIGN::LEFT),
 	m_wndSeriesStatic(20, ALIGN::RIGHT),
 	m_wndTotalStatic(25, ALIGN::LEFT),
@@ -35,7 +34,18 @@ COrderView::~COrderView()
 void COrderView::DoDataExchange(CDataExchange* pDX)
 {
 	CFormView::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_STATIC_SHOPNAME, m_wndShopNameStatic);
+	//CMainFrame* pMainFrame = (CMainFrame*)AfxGetMainWnd();
+	//CString strShopName;
+	//if(pMainFrame->m_pSelectedOrder!=NULL)
+	//	strShopName = _T("hahaha");
+	DDX_Text(pDX, IDC_STATIC_SHOPNAME, ((CMainFrame*)AfxGetMainWnd())->m_strShopName);
+	DDX_Text(pDX, IDC_STATIC_SHOPADDR, ((CMainFrame*)AfxGetMainWnd())->m_strShopAddr);
+	DDX_Text(pDX, IDC_STATIC_ORDERTIME, ((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_timOrderTime);
+	DDX_Text(pDX, IDC_STATIC_CASHIER, ((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_strCashier);
+	DDX_Text(pDX, IDC_STATIC_SERIES, ((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_strSeries);
+
+
+
 }
 
 BEGIN_MESSAGE_MAP(COrderView, CFormView)
@@ -74,17 +84,16 @@ int COrderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CRect rectEmpty;
 	rectEmpty.SetRectEmpty();
 	if (m_wndShopNameStatic.Create(_T("天上人间"), WS_CHILD | WS_VISIBLE | SS_CENTER | SS_CENTERIMAGE, rectEmpty, this,IDC_STATIC_SHOPNAME) == 0 ||
-		m_wndShopAddrStatic.Create(_T("天鹅座，开普勒-186F，东经253度北纬46度，伽利略区，星际大道，4259号"), WS_CHILD | WS_VISIBLE | SS_CENTER | SS_CENTERIMAGE, rectEmpty, this, 1) == 0 ||
-		m_wndDevider1Static.Create(_T("*******************"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
-		m_wndDevider2Static.Create(_T("*      结账联     *"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
-		m_wndDevider3Static.Create(_T("*******************"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
-		m_wndOrderTimeStatic.Create(_T("2017/5/13 17:07:15"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
-		m_wndSeriesStatic.Create(_T("AA00000003"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
-		m_wndTotalStatic.Create(_T("合计： ￥1000000.00"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
-		m_wndChargeStatic.Create(_T("支付宝收取： ￥1000000.00"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
-		m_wndChangeStatic.Create(_T("支付宝找零： ￥0.00"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
-		m_wndCashier.Create(_T("收银员： 习近平"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0 ||
-		m_wndTelephone.Create(_T("联系电话：000-1234567"), WS_CHILD | WS_VISIBLE, rectEmpty, this, 1) == 0)
+		m_wndShopAddrStatic.Create(_T("天鹅座，开普勒-186F，东经253度北纬46度，伽利略区，星际大道，4259号"), WS_CHILD | WS_VISIBLE | SS_CENTER | SS_CENTERIMAGE, rectEmpty, this, IDC_STATIC_SHOPADDR) == 0 ||
+		m_wndDevider1Static.Create(_T("*******************\n*      结账联     *\n*******************"), WS_CHILD | WS_VISIBLE | SS_CENTER | SS_CENTERIMAGE, rectEmpty, this, IDC_STATIC_DEVIDER1) == 0 ||
+		m_wndDevider2Static.Create(_T("------------------"), WS_CHILD | WS_VISIBLE | SS_CENTER | SS_CENTERIMAGE, rectEmpty, this, IDC_STATIC_DEVIDER2) == 0 ||
+		m_wndOrderTimeStatic.Create(_T("2017/5/13 17:07:15"), WS_CHILD | WS_VISIBLE|SS_LEFT, rectEmpty, this, IDC_STATIC_ORDERTIME) == 0 ||
+		m_wndSeriesStatic.Create(_T("AA00000003"), WS_CHILD | WS_VISIBLE|SS_RIGHT, rectEmpty, this, IDC_STATIC_ORDERSERIES) == 0 ||
+		m_wndTotalStatic.Create(_T("合计： ￥1000000.00"), WS_CHILD | WS_VISIBLE, rectEmpty, this, IDC_STATIC_TOTAL) == 0 ||
+		m_wndChargeStatic.Create(_T("支付宝收取： ￥1000000.00"), WS_CHILD | WS_VISIBLE, rectEmpty, this, IDC_STATIC_CHARGE) == 0 ||
+		m_wndChangeStatic.Create(_T("支付宝找零： ￥0.00"), WS_CHILD | WS_VISIBLE, rectEmpty, this, IDC_STATIC_CHANGE) == 0 ||
+		m_wndCashier.Create(_T("收银员： 习近平"), WS_CHILD | WS_VISIBLE|SS_CENTER, rectEmpty, this, IDC_STATIC_CASHIER) == 0 ||
+		m_wndTelephone.Create(_T("联系电话：000-1234567"), WS_CHILD | WS_VISIBLE, rectEmpty, this, IDC_STATIC_TELEPHONE) == 0)
 	{
 		TRACE0("未能创建小票表头\n");
 		return -1;      // 未能创建

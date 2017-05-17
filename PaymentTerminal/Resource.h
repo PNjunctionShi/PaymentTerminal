@@ -10,6 +10,8 @@
 #define ID_LIST_ORDER                   104
 #define ID_LIST_COUPON                  105
 #define ID_LIST_MEMBER                  106
+#define IDC_STATIC_DEVIDER1             107
+#define IDC_STATIC_DEVIDER2             108
 #define IDB_WRITESMALL                  110
 #define IDB_WRITELARGE                  111
 #define IDB_MAIN                        112

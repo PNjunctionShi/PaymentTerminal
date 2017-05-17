@@ -50,6 +50,9 @@ END_MESSAGE_MAP()
 CMainFrame::CMainFrame():m_Operator(_T("喜羊羊"),COperator::OperatorType::Cashier)
 {
 	// TODO: 在此添加成员初始化代码
+	m_strShopName = _T("牛逼店铺");
+	m_strShopAddr = _T("牛逼地址");
+	m_pSelectedOrder = (COrder*)RUNTIME_CLASS(COrder)->CreateObject();
 	theApp.m_nAppLook = theApp.GetInt(_T("ApplicationLook"), ID_VIEW_APPLOOK_OFF_2007_BLUE);
 }
 
@@ -353,17 +356,17 @@ void CMainFrame::OnUpdateMembership(CCmdUI *pCmdUI)
 void CMainFrame::OnNewOrder()
 {
 	m_pSelectedOrder = (COrder*)(RUNTIME_CLASS(COrder)->CreateObject());
-	m_pSelectedOrder->m_timOrderTime = CTime::GetCurrentTime();
+	m_pSelectedOrder->m_timOrderTime = COleDateTime::GetCurrentTime();
 	m_pSelectedOrder->m_strSeries = GenerateSeries();
 	m_pSelectedOrder->m_strCashier = m_Operator.m_strName;
 	m_pSelectedOrder->m_ePayType = EPaymentType::Cash;
 	m_pSelectedOrder->m_eOrderStatus = EOrderStatus::UNPAIED;
-	m_pSelectedOrder->m_timPayTime = NULL;
+	m_pSelectedOrder->m_timPayTime = time(NULL);
 	m_pSelectedOrder->m_listCommodity.RemoveAll();
 	m_wndRibbonBar.ShowContextCategories(ID_CNTX_ORDER,TRUE);
 	m_wndRibbonBar.ActivateContextCategory(ID_CNTX_ORDER);
-	m_wndOrderDockPane.m_pBaseplate->m_wndShopNameStatic.SetWindowTextW(m_pSelectedOrder->m_strSeries);
-	m_wndOrderDockPane.m_pBaseplate->UpdateData(TRUE);
+	//m_wndOrderDockPane.m_pBaseplate->m_wndShopNameStatic.SetWindowTextW(m_pSelectedOrder->m_strSeries);
+	m_wndOrderDockPane.m_pBaseplate->UpdateData(FALSE);
 	m_wndOrderDockPane.m_pBaseplate->ReCalcLayout();
 	// TODO: 在此添加命令处理程序代码
 }
@@ -371,7 +374,7 @@ void CMainFrame::OnNewOrder()
 
 CString CMainFrame::GenerateSeries()
 {
-	CTime now = CTime::GetCurrentTime();
+	COleDateTime now = COleDateTime::GetCurrentTime();
 	if (now.GetYear() == m_timeLasttime.GetYear() &&
 		now.GetMonth() == m_timeLasttime.GetMonth() &&
 		now.GetDay() == m_timeLasttime.GetDay())

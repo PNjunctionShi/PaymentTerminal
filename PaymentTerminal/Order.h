@@ -20,16 +20,17 @@ class COrder : public CObject
 	friend class CMainFrame;
 	friend class COrderView;
 public:
-	COrder(CString strSeries=_T(""), CString strCashier=_T(""), EPaymentType ePayType=EPaymentType::Alipay );
+	COrder();
 	virtual ~COrder();
 protected:
-	CTime m_timOrderTime; //订单生成时间
+	COleDateTime m_timOrderTime; //订单生成时间
 	CString  m_strSeries; //订单序列号
 	CString m_strCashier; //创建订单的收银员名称
 	EPaymentType m_ePayType; //支付类型，支付宝或微信
 	EOrderStatus m_eOrderStatus; //订单状态，未支付，已支付，已入账
-	CTime m_timPayTime; //订单付账时间
+	COleDateTime m_timPayTime; //订单付账时间
 	CTypedPtrList<CObList,CCommodity*> m_listCommodity; //商品清单
+	BOOL m_bArchived;
 	DECLARE_SERIAL(COrder)
 public:
 	BOOL PayOff(); //支付
