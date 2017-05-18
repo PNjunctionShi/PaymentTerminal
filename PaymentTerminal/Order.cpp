@@ -4,7 +4,6 @@
 #include "stdafx.h"
 #include "PaymentTerminal.h"
 #include "Order.h"
-#include "MainFrm.h"
 
 // COrder
 
@@ -17,6 +16,7 @@ COrder::COrder()
 	m_eOrderStatus = EOrderStatus::UNPAIED;
 	m_timPayTime = time(NULL);
 	m_listCommodity.RemoveAll();
+	m_bArchived = FALSE;
 }
 
 COrder::~COrder()

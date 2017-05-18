@@ -198,7 +198,6 @@ void COrderView::ReCalcLayout()
 
 	Yoffset += nShopAddrHeight + 7;
 	int nDevider1Height = m_wndDevider1Static.FitDevider3(nReceiptWidth, '*', _T("Ω·’À¡™"));
-	m_wndDevider1Static.Invalidate(TRUE);
 	m_wndDevider1Static.MoveWindow(Xoffset, Yoffset, nReceiptWidth, nDevider1Height, TRUE);
 
 	Yoffset += nDevider1Height + 10;
@@ -235,7 +234,6 @@ void COrderView::ReCalcLayout()
 
 	Yoffset += nChangeHeight+7;
 	int nDevider2Height = m_wndDevider2Static.FitDevider1(nReceiptWidth, '-');
-	m_wndDevider2Static.Invalidate(TRUE);
 	m_wndDevider2Static.MoveWindow(Xoffset, Yoffset, nReceiptWidth, nDevider2Height, TRUE);
 
 	Yoffset += nDevider2Height;

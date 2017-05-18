@@ -363,11 +363,15 @@ void CMainFrame::OnNewOrder()
 	m_pSelectedOrder->m_eOrderStatus = EOrderStatus::UNPAIED;
 	m_pSelectedOrder->m_timPayTime = time(NULL);
 	m_pSelectedOrder->m_listCommodity.RemoveAll();
+
 	m_wndRibbonBar.ShowContextCategories(ID_CNTX_ORDER,TRUE);
 	m_wndRibbonBar.ActivateContextCategory(ID_CNTX_ORDER);
-	//m_wndOrderDockPane.m_pBaseplate->m_wndShopNameStatic.SetWindowTextW(m_pSelectedOrder->m_strSeries);
+
+	m_wndOrderDockPane.m_pBaseplate->ShowWindow(SW_HIDE);
 	m_wndOrderDockPane.m_pBaseplate->UpdateData(FALSE);
 	m_wndOrderDockPane.m_pBaseplate->ReCalcLayout();
+	m_wndOrderDockPane.m_pBaseplate->ShowWindow(SW_SHOW);
+	
 	// TODO: 在此添加命令处理程序代码
 }
 

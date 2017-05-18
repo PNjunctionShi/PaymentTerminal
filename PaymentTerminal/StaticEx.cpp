@@ -108,7 +108,9 @@ int CStaticEx::FitDevider3(int nWidth, char Infilling, LPCTSTR Content)
 	strDevider = strDevider1 +'\n'+ Infilling+ strDevider2+ strContent+ strDevider2+ Infilling+'\n'+ strDevider1;
 	CRect rectText;
 	rectText.SetRect(0, 0, nWidth, 0);
+	ShowWindow(SW_HIDE);
 	SetWindowText(strDevider);
+	ShowWindow(SW_SHOW);
 	return pDC->DrawText(strDevider, &rectText, DT_EDITCONTROL | DT_WORDBREAK | DT_CALCRECT);
 }
 
@@ -123,7 +125,9 @@ int CStaticEx::FitDevider1(int nWidth, char Infilling)
 	CString strDevider(Infilling, cntInfilling);
 	CRect rectText;
 	rectText.SetRect(0, 0, nWidth, 0);
+	ShowWindow(SW_HIDE);
 	SetWindowText(strDevider);
+	ShowWindow(SW_SHOW);
 	return pDC->DrawText(strDevider, &rectText, DT_EDITCONTROL | DT_WORDBREAK | DT_CALCRECT);
 }
 
