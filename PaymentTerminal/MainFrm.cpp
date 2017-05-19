@@ -52,6 +52,10 @@ CMainFrame::CMainFrame():m_Operator(_T("喜羊羊"),COperator::OperatorType::Cashie
 	// TODO: 在此添加成员初始化代码
 	m_strShopName = _T("牛逼店铺");
 	m_strShopAddr = _T("牛逼地址");
+	m_pOrderDockPane = (COrderDockPane*)RUNTIME_CLASS(COrderDockPane)->CreateObject();
+	m_pOrderDockPane->m_pBaseplate->m_pMainFrame = this;
+	m_pMembershipView = (CMembershipView*)RUNTIME_CLASS(CMembershipView)->CreateObject();
+	m_pCouponView = (CCouponView*)RUNTIME_CLASS(CCouponView)->CreateObject();
 	m_pSelectedOrder = (COrder*)RUNTIME_CLASS(COrder)->CreateObject();
 	theApp.m_nAppLook = theApp.GetInt(_T("ApplicationLook"), ID_VIEW_APPLOOK_OFF_2007_BLUE);
 }
@@ -76,27 +80,27 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;      // 未能创建
 	}
 
-	if (!m_wndOrderDockPane.Create(this))
+	if (!m_pOrderDockPane->Create(this))
 	{
 		TRACE0("未能创建订单视图\n");
 		return -1;      // 未能创建
 	}
 
-	if (!m_wndMembershipView.Create(this))
+	if (!m_pMembershipView->Create(this))
 	{
 		TRACE0("未能创建会员视图\n");
 		return -1;      // 未能创建
 	}
 
-	if (!m_wndCouponView.Create(this))
+	if (!m_pCouponView->Create(this))
 	{
 		TRACE0("未能创建卡券视图\n");
 		return -1;      // 未能创建
 	}
 
 	CDockablePane* pTabbedBar = NULL;
-	m_wndMembershipView.AttachToTabWnd(&m_wndOrderDockPane, DM_SHOW, TRUE, &pTabbedBar);
-	m_wndCouponView.AttachToTabWnd(&m_wndOrderDockPane, DM_SHOW, TRUE, &pTabbedBar);
+	m_pMembershipView->AttachToTabWnd(m_pOrderDockPane, DM_SHOW, TRUE, &pTabbedBar);
+	m_pCouponView->AttachToTabWnd(m_pOrderDockPane, DM_SHOW, TRUE, &pTabbedBar);
 	CString strTitlePane1;
 	CString strTitlePane2;
 	bNameValid = strTitlePane1.LoadString(IDS_STATUS_PANE1);
@@ -310,7 +314,7 @@ void CMainFrame::OnUpdateFilePrintPreview(CCmdUI* pCmdUI)
 
 void CMainFrame::OnOrder()
 {
-	m_wndOrderDockPane.ShowPane(m_wndOrderDockPane.IsVisible()?FALSE:TRUE, FALSE, TRUE);
+	m_pOrderDockPane->ShowPane(m_pOrderDockPane->IsVisible()?FALSE:TRUE, FALSE, TRUE);
 	RecalcLayout(FALSE);
 	// TODO: 在此添加命令处理程序代码
 }
@@ -318,14 +322,14 @@ void CMainFrame::OnOrder()
 
 void CMainFrame::OnUpdateOrder(CCmdUI *pCmdUI)
 {
-	pCmdUI->SetCheck(m_wndOrderDockPane.IsVisible());
+	pCmdUI->SetCheck(m_pOrderDockPane->IsVisible());
 	// TODO: 在此添加命令更新用户界面处理程序代码
 }
 
 
 void CMainFrame::OnCoupon()
 {
-	m_wndCouponView.ShowPane(m_wndCouponView.IsVisible() ? FALSE : TRUE, FALSE, TRUE);
+	m_pCouponView->ShowPane(m_pCouponView->IsVisible() ? FALSE : TRUE, FALSE, TRUE);
 	RecalcLayout(FALSE);
 	// TODO: 在此添加命令处理程序代码
 }
@@ -333,14 +337,14 @@ void CMainFrame::OnCoupon()
 
 void CMainFrame::OnUpdateCoupon(CCmdUI *pCmdUI)
 {
-	pCmdUI->SetCheck(m_wndCouponView.IsVisible());
+	pCmdUI->SetCheck(m_pCouponView->IsVisible());
 	// TODO: 在此添加命令更新用户界面处理程序代码
 }
 
 
 void CMainFrame::OnMembership()
 {
-	m_wndMembershipView.ShowPane(m_wndMembershipView.IsVisible() ? FALSE : TRUE, FALSE, TRUE);
+	m_pMembershipView->ShowPane(m_pMembershipView->IsVisible() ? FALSE : TRUE, FALSE, TRUE);
 	RecalcLayout(FALSE);
 	// TODO: 在此添加命令处理程序代码
 }
@@ -348,7 +352,7 @@ void CMainFrame::OnMembership()
 
 void CMainFrame::OnUpdateMembership(CCmdUI *pCmdUI)
 {
-	pCmdUI->SetCheck(m_wndMembershipView.IsVisible());
+	pCmdUI->SetCheck(m_pMembershipView->IsVisible());
 	// TODO: 在此添加命令更新用户界面处理程序代码
 }
 
@@ -367,10 +371,10 @@ void CMainFrame::OnNewOrder()
 	m_wndRibbonBar.ShowContextCategories(ID_CNTX_ORDER,TRUE);
 	m_wndRibbonBar.ActivateContextCategory(ID_CNTX_ORDER);
 
-	m_wndOrderDockPane.m_pBaseplate->ShowWindow(SW_HIDE);
-	m_wndOrderDockPane.m_pBaseplate->UpdateData(FALSE);
-	m_wndOrderDockPane.m_pBaseplate->ReCalcLayout();
-	m_wndOrderDockPane.m_pBaseplate->ShowWindow(SW_SHOW);
+	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_HIDE);
+	m_pOrderDockPane->m_pBaseplate->UpdateData(FALSE);
+	m_pOrderDockPane->m_pBaseplate->ReCalcLayout();
+	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_SHOW);
 	
 	// TODO: 在此添加命令处理程序代码
 }

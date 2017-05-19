@@ -5,7 +5,7 @@
 
 class CMembershipView : public CDockablePane
 {
-	DECLARE_DYNAMIC(CMembershipView)
+	DECLARE_DYNCREATE(CMembershipView)
 
 public:
 	CMembershipView();

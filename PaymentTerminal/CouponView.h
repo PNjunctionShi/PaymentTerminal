@@ -5,7 +5,7 @@
 
 class CCouponView : public CDockablePane
 {
-	DECLARE_DYNAMIC(CCouponView)
+	DECLARE_DYNCREATE(CCouponView)
 
 public:
 	CCouponView();

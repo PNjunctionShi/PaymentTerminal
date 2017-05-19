@@ -24,7 +24,6 @@ COrderView::COrderView()
 	m_wndCashier(20, ALIGN::CENTER),
 	m_wndTelephone(20, ALIGN::CENTER)
 {
-
 }
 
 COrderView::~COrderView()
@@ -38,11 +37,12 @@ void COrderView::DoDataExchange(CDataExchange* pDX)
 	//CString strShopName;
 	//if(pMainFrame->m_pSelectedOrder!=NULL)
 	//	strShopName = _T("hahaha");
-	DDX_Text(pDX, IDC_STATIC_SHOPNAME, ((CMainFrame*)AfxGetMainWnd())->m_strShopName);
-	DDX_Text(pDX, IDC_STATIC_SHOPADDR, ((CMainFrame*)AfxGetMainWnd())->m_strShopAddr);
-	DDX_Text(pDX, IDC_STATIC_ORDERTIME, ((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_timOrderTime);
-	DDX_Text(pDX, IDC_STATIC_CASHIER, ((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_strCashier);
-	DDX_Text(pDX, IDC_STATIC_SERIES, ((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_strSeries);
+	DDX_Text(pDX, IDC_STATIC_SHOPNAME, m_pMainFrame->m_strShopName);
+	DDX_Text(pDX, IDC_STATIC_SHOPADDR, m_pMainFrame->m_strShopAddr);
+	DDX_Text(pDX, IDC_STATIC_ORDERTIME, m_pMainFrame->m_pSelectedOrder->m_timOrderTime);
+	DDX_Text(pDX, IDC_STATIC_CASHIER, m_pMainFrame->m_pSelectedOrder->m_strCashier);
+	DDX_Text(pDX, IDC_STATIC_SERIES, m_pMainFrame->m_pSelectedOrder->m_strSeries);/*
+	DDX_Control(pDX,IDC_LIST_COMMODITY, m_pMainFrame->m_pSelectedOrder->m_listCommodity)*/
 
 
 

@@ -8,7 +8,7 @@
 
 // COrderDockPane
 
-IMPLEMENT_DYNAMIC(COrderDockPane, CDockablePane)
+IMPLEMENT_DYNCREATE(COrderDockPane, CDockablePane)
 
 COrderDockPane::COrderDockPane()
 {

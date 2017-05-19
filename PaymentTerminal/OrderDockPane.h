@@ -1,10 +1,12 @@
 #pragma once
 #include "OrderView.h"
+
+class COrderView;
 // COrderDockPane
 
 class COrderDockPane : public CDockablePane
 {
-	DECLARE_DYNAMIC(COrderDockPane)
+	DECLARE_DYNCREATE(COrderDockPane)
 public:
 	COrderView* m_pBaseplate;
 

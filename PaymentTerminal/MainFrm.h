@@ -20,6 +20,8 @@
 #include "Order.h"
 #include "Operator.h"
 
+class COrderDockPane;
+
 class CMainFrame : public CFrameWndEx
 {
 public:
@@ -58,9 +60,9 @@ protected:  // 控件条嵌入成员
 	CMFCToolBarImages m_PanelImages;
 	CMFCRibbonStatusBar  m_wndStatusBar;
 	CMFCCaptionBar    m_wndCaptionBar;
-	CCouponView m_wndCouponView;
-	COrderDockPane m_wndOrderDockPane;
-	CMembershipView m_wndMembershipView;
+	CCouponView* m_pCouponView;
+	COrderDockPane* m_pOrderDockPane;
+	CMembershipView* m_pMembershipView;
 
 // 生成的消息映射函数
 protected:

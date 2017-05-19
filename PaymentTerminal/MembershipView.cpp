@@ -8,7 +8,7 @@
 
 // CMembershipView
 
-IMPLEMENT_DYNAMIC(CMembershipView, CDockablePane)
+IMPLEMENT_DYNCREATE(CMembershipView, CDockablePane)
 
 CMembershipView::CMembershipView()
 {

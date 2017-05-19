@@ -8,7 +8,7 @@
 
 // CCouponView
 
-IMPLEMENT_DYNAMIC(CCouponView, CDockablePane)
+IMPLEMENT_DYNCREATE(CCouponView, CDockablePane)
 
 CCouponView::CCouponView()
 {

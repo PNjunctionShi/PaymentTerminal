@@ -1,7 +1,9 @@
 #pragma once
 #include "StaticEx.h"
 #include "CommodityList.h"
+#include "MainFrm.h"
 
+class CMainFrame;
 // COrderView ¥∞ÃÂ ”Õº
 
 class COrderView : public CFormView
@@ -50,6 +52,7 @@ public:
 	virtual void ReCalcLayout();
 	virtual void OnDraw(CDC* pDC);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	CMainFrame* m_pMainFrame;
 };
 
 
