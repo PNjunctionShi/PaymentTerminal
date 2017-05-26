@@ -26,11 +26,13 @@ class CMainFrame : public CFrameWndEx
 {
 public:
 	COrder* m_pSelectedOrder;
+	CCommodity* m_pSelectedCommodity;
 	COleDateTime m_timeLasttime;
 	int m_nSubSeries;
 	COperator m_Operator;
 	CString m_strShopName;
 	CString m_strShopAddr;
+	CString m_strTelephone;
 
 protected: // 仅从序列化创建
 	CMainFrame();
@@ -87,6 +89,7 @@ public:
 	afx_msg void OnUpdateMembership(CCmdUI *pCmdUI);
 	afx_msg void OnNewOrder();
 	CString GenerateSeries();
+	afx_msg void OnNewCommodity();
 };
 
 

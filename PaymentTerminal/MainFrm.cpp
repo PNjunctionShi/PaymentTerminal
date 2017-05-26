@@ -43,6 +43,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND(ID_Membership, &CMainFrame::OnMembership)
 	ON_UPDATE_COMMAND_UI(ID_Membership, &CMainFrame::OnUpdateMembership)
 	ON_COMMAND(ID_NEW_ORDER, &CMainFrame::OnNewOrder)
+	ON_COMMAND(ID_NEW_COMMODITY, &CMainFrame::OnNewCommodity)
 END_MESSAGE_MAP()
 
 // CMainFrame 构造/析构
@@ -51,7 +52,8 @@ CMainFrame::CMainFrame():m_Operator(_T("喜羊羊"),COperator::OperatorType::Cashie
 {
 	// TODO: 在此添加成员初始化代码
 	m_strShopName = _T("牛逼店铺");
-	m_strShopAddr = _T("牛逼地址");
+	m_strShopAddr = _T("牛逼店的地址");
+	m_strTelephone = _T("021-1234567");
 	m_pOrderDockPane = (COrderDockPane*)RUNTIME_CLASS(COrderDockPane)->CreateObject();
 	m_pOrderDockPane->m_pBaseplate->m_pMainFrame = this;
 	m_pMembershipView = (CMembershipView*)RUNTIME_CLASS(CMembershipView)->CreateObject();
@@ -359,6 +361,8 @@ void CMainFrame::OnUpdateMembership(CCmdUI *pCmdUI)
 
 void CMainFrame::OnNewOrder()
 {
+	if (!(m_pSelectedOrder->m_bArchived))
+		delete m_pSelectedOrder;
 	m_pSelectedOrder = (COrder*)(RUNTIME_CLASS(COrder)->CreateObject());
 	m_pSelectedOrder->m_timOrderTime = COleDateTime::GetCurrentTime();
 	m_pSelectedOrder->m_strSeries = GenerateSeries();
@@ -367,7 +371,10 @@ void CMainFrame::OnNewOrder()
 	m_pSelectedOrder->m_eOrderStatus = EOrderStatus::UNPAIED;
 	m_pSelectedOrder->m_timPayTime = time(NULL);
 	m_pSelectedOrder->m_listCommodity.RemoveAll();
-
+	m_pSelectedOrder->m_dTotal = 0.00;
+	m_pSelectedOrder->m_dCharge = 0;
+	m_pSelectedOrder->m_dChange = 0;
+	m_pOrderDockPane->m_pBaseplate->m_wndCommodityList.SetItemCount((int)(m_pSelectedOrder->m_listCommodity.GetCount()));
 	m_wndRibbonBar.ShowContextCategories(ID_CNTX_ORDER,TRUE);
 	m_wndRibbonBar.ActivateContextCategory(ID_CNTX_ORDER);
 
@@ -398,4 +405,19 @@ CString CMainFrame::GenerateSeries()
 	strSubSeries.Format(_T("%04d"), m_nSubSeries);
 	CString strDate = now.Format(_T("%y%m%d"));
 	return strDate+ strSubSeries;
+}
+
+
+void CMainFrame::OnNewCommodity()
+{
+	m_pSelectedCommodity = (CCommodity*)(RUNTIME_CLASS(CCommodity)->CreateObject());
+	ASSERT(m_pSelectedOrder);
+	m_pSelectedOrder->m_listCommodity.AddTail(m_pSelectedCommodity);
+	m_wndRibbonBar.ShowContextCategories(ID_CNTX_COMMODITY, TRUE);
+	m_wndRibbonBar.ActivateContextCategory(ID_CNTX_COMMODITY);
+	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_HIDE);
+	m_pOrderDockPane->m_pBaseplate->m_wndCommodityList.SetItemCount((int)(m_pSelectedOrder->m_listCommodity.GetCount()));
+	m_pOrderDockPane->m_pBaseplate->ReCalcLayout();
+	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_SHOW);
+	// TODO: 在此添加命令处理程序代码
 }

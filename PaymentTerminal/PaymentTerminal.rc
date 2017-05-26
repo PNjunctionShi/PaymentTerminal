@@ -73,9 +73,7 @@ END
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "res\\PaymentTerminal.ico"
-
 IDR_PaymentTerminalTYPE ICON                    "res\\PaymentTerminalDoc.ico"
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -83,27 +81,16 @@ IDR_PaymentTerminalTYPE ICON                    "res\\PaymentTerminalDoc.ico"
 //
 
 IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
-
 IDR_MAINFRAME_256       BITMAP                  "res\\Toolbar256.bmp"
-
 IDB_MAIN                BITMAP                  "res\\main.bmp"
-
 IDB_FILELARGE           BITMAP                  "res\\filelarge.bmp"
-
 IDB_FILESMALL           BITMAP                  "res\\filesmall.bmp"
-
 IDB_WRITELARGE          BITMAP                  "res\\writelarge.bmp"
-
 IDB_WRITESMALL          BITMAP                  "res\\writesmall.bmp"
-
 IDB_BUTTONS             BITMAP                  "res\\buttons.bmp"
-
 IDB_INFO                BITMAP                  "res\\info.bmp"
-
 IDB_MAIN_LARGE          BITMAP                  "res\\writelar.bmp"
-
 IDB_ORDER_LARGE         BITMAP                  "res\\orderlarge.bmp"
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -374,6 +361,7 @@ BEGIN
     ID_LIST_MEMBER          "会员列表"
     IDC_STATIC_DEVIDER1     "订单分隔符1，结账联"
     IDC_STATIC_DEVIDER2     "订单分隔符2"
+    ID_LIST_COMMODITY       "商品列表"
 END
 
 STRINGTABLE

@@ -52,7 +52,9 @@ public:
 	virtual void ReCalcLayout();
 	virtual void OnDraw(CDC* pDC);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	void COrderView::DDXEx_Text(CDataExchange *pDX, int nIDC, double &value, LPCTSTR lpszFormat);
 	CMainFrame* m_pMainFrame;
+	afx_msg void OnLvnGetdispinfo(NMHDR *pNMHDR, LRESULT *pResult);
 };
 
 

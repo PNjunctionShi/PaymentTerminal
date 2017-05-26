@@ -8,7 +8,7 @@ public:
 	CCommodity(CString strName=_T("Goods"), DOUBLE dPrice=0, DOUBLE dQuantity=0);
 	virtual ~CCommodity();
 
-protected:
+public:
 	CString m_strName; //商品名称
 	DOUBLE m_dPrice; //商品价格
 	DOUBLE m_dQuantity; //商品数量

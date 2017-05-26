@@ -30,6 +30,9 @@ protected:
 	EOrderStatus m_eOrderStatus; //订单状态，未支付，已支付，已入账
 	COleDateTime m_timPayTime; //订单付账时间
 	CTypedPtrList<CObList,CCommodity*> m_listCommodity; //商品清单
+	double m_dTotal;//订单总计
+	double m_dCharge; //订单收取
+	double m_dChange; //订单找零
 	BOOL m_bArchived;
 	DECLARE_SERIAL(COrder)
 public:

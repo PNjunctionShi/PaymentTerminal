@@ -61,3 +61,5 @@ int CCommodityList::CalcHeight()
 	nItem = GetItemCount();
 	return rectHeader.Height() + nItem*rectItem.Height();
 }
+
+

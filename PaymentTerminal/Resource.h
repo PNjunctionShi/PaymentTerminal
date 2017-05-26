@@ -12,6 +12,7 @@
 #define ID_LIST_MEMBER                  106
 #define IDC_STATIC_DEVIDER1             107
 #define IDC_STATIC_DEVIDER2             108
+#define ID_LIST_COMMODITY               109
 #define IDB_WRITESMALL                  110
 #define IDB_WRITELARGE                  111
 #define IDB_MAIN                        112
@@ -97,13 +98,15 @@
 #define ID_EDIT3                        32797
 #define ID_BUTTON12                     32798
 #define ID_CONTEXT2                     32799
+#define ID_NEW_COMMODITY                32800
+#define ID_CNTX_COMMODITY               32801
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        311
-#define _APS_NEXT_COMMAND_VALUE         32800
+#define _APS_NEXT_COMMAND_VALUE         32802
 #define _APS_NEXT_CONTROL_VALUE         1013
 #define _APS_NEXT_SYMED_VALUE           311
 #endif

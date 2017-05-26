@@ -16,6 +16,7 @@ COrder::COrder()
 	m_eOrderStatus = EOrderStatus::UNPAIED;
 	m_timPayTime = time(NULL);
 	m_listCommodity.RemoveAll();
+	m_dTotal = 0;
 	m_bArchived = FALSE;
 }
 

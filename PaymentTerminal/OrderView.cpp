@@ -33,18 +33,26 @@ COrderView::~COrderView()
 void COrderView::DoDataExchange(CDataExchange* pDX)
 {
 	CFormView::DoDataExchange(pDX);
-	//CMainFrame* pMainFrame = (CMainFrame*)AfxGetMainWnd();
-	//CString strShopName;
-	//if(pMainFrame->m_pSelectedOrder!=NULL)
-	//	strShopName = _T("hahaha");
+
 	DDX_Text(pDX, IDC_STATIC_SHOPNAME, m_pMainFrame->m_strShopName);
 	DDX_Text(pDX, IDC_STATIC_SHOPADDR, m_pMainFrame->m_strShopAddr);
 	DDX_Text(pDX, IDC_STATIC_ORDERTIME, m_pMainFrame->m_pSelectedOrder->m_timOrderTime);
 	DDX_Text(pDX, IDC_STATIC_CASHIER, m_pMainFrame->m_pSelectedOrder->m_strCashier);
-	DDX_Text(pDX, IDC_STATIC_SERIES, m_pMainFrame->m_pSelectedOrder->m_strSeries);/*
-	DDX_Control(pDX,IDC_LIST_COMMODITY, m_pMainFrame->m_pSelectedOrder->m_listCommodity)*/
+	DDX_Text(pDX, IDC_STATIC_SERIES, m_pMainFrame->m_pSelectedOrder->m_strSeries);
+	DDXEx_Text(pDX, IDC_STATIC_TOTAL, m_pMainFrame->m_pSelectedOrder->m_dTotal,_T("总计: ￥%.2f"));
+	CString tmp;
+	if (m_pMainFrame->m_pSelectedOrder->m_ePayType == 1)
+		tmp = _T("现金");
+	if (m_pMainFrame->m_pSelectedOrder->m_ePayType == 2)
+		tmp = _T("微信");
+	if (m_pMainFrame->m_pSelectedOrder->m_ePayType == 3)
+		tmp = _T("支付宝");
+	DDXEx_Text(pDX, IDC_STATIC_CHARGE, m_pMainFrame->m_pSelectedOrder->m_dCharge, tmp + _T("收银: ￥%.2f"));
+	DDXEx_Text(pDX, IDC_STATIC_CHANGE, m_pMainFrame->m_pSelectedOrder->m_dChange, tmp + _T("找零: ￥%.2f"));
+	DDX_Text(pDX, IDC_STATIC_TELEPHONE, m_pMainFrame->m_strTelephone);
 
-
+	if (!pDX->m_bSaveAndValidate)
+		ReCalcLayout();
 
 }
 
@@ -53,6 +61,7 @@ BEGIN_MESSAGE_MAP(COrderView, CFormView)
 	ON_WM_SIZE()
 	ON_WM_MOUSEACTIVATE()
 	ON_WM_ERASEBKGND()
+	ON_NOTIFY(LVN_GETDISPINFO, ID_LIST_COMMODITY, &COrderView::OnLvnGetdispinfo)
 END_MESSAGE_MAP()
 
 
@@ -99,8 +108,8 @@ int COrderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;      // 未能创建
 	}
 
-	const DWORD dwStyle = WS_CHILD | WS_VISIBLE | LVS_REPORT | LVS_SHOWSELALWAYS | LVS_SINGLESEL;
-	if (!m_wndCommodityList.Create(dwStyle, rectEmpty, this, ID_LIST_ORDER))
+	const DWORD dwStyle = WS_CHILD | WS_VISIBLE | LVS_REPORT | LVS_SHOWSELALWAYS | LVS_SINGLESEL | LVS_OWNERDATA;
+	if (!m_wndCommodityList.Create(dwStyle, rectEmpty, this, ID_LIST_COMMODITY))
 	{
 		TRACE0("未能创建商品列表\n");
 		return -1;      // 未能创建
@@ -113,11 +122,11 @@ int COrderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndCommodityList.InsertColumn(4, _T("小计"), 0, 100);
 
 	//======================================================================================================
-	m_wndCommodityList.InsertItem(0, _T("1"));
-	m_wndCommodityList.SetItemText(0, 1, _T("盖浇饭"));
-	m_wndCommodityList.SetItemText(0, 2, _T("15.00"));
-	m_wndCommodityList.SetItemText(0, 3, _T("2.0"));
-	m_wndCommodityList.SetItemText(0, 4, _T("30.00"));
+	//m_wndCommodityList.InsertItem(0, _T("1"));
+	//m_wndCommodityList.SetItemText(0, 1, _T("盖浇饭"));
+	//m_wndCommodityList.SetItemText(0, 2, _T("15.00"));
+	//m_wndCommodityList.SetItemText(0, 3, _T("2.0"));
+	//m_wndCommodityList.SetItemText(0, 4, _T("30.00"));
 	// TODO:  在此添加您专用的创建代码
 
 	return 0;
@@ -173,7 +182,13 @@ void COrderView::ReCalcLayout()
 	GetScrollBarSizes(sizeScroll);
 	CRect rectClient;
 	GetClientRect(rectClient);
-	
+
+	CPoint ptScroll;
+	if (m_nMapMode)
+		ptScroll = GetScrollPosition();
+	else
+		ptScroll = CPoint(0, 0);
+
 	if (rectClient.Width()<m_nMinWidth)
 	{
 		sizeScroll.cx = m_nMinWidth;
@@ -188,8 +203,9 @@ void COrderView::ReCalcLayout()
 	int nReceiptWidth = sizeScroll.cx-margin*2;
 	int nShopNameHeight = m_wndShopNameStatic.CalcHeight(nReceiptWidth);
 	
-	int Xoffset = margin;
-	int Yoffset = margin;
+	int Xoffset = margin- ptScroll.x;
+	int Yoffset = margin- ptScroll.y;
+	
 	m_wndShopNameStatic.MoveWindow(Xoffset, Yoffset, nReceiptWidth, nShopNameHeight, TRUE);
 
 	Yoffset += nShopNameHeight + 7;
@@ -216,7 +232,7 @@ void COrderView::ReCalcLayout()
 	m_wndSeriesStatic.MoveWindow(Xoffset, Yoffset, nSeriesWidth, nSeriesHeight, TRUE);
 
 	Yoffset += max(nOrderTimeHeight, max(nCashierHeight, nSeriesHeight))+7;
-	Xoffset = margin;
+	Xoffset = margin - ptScroll.x;
 	int nCommodityListHeight=m_wndCommodityList.CalcHeight();
 	m_wndCommodityList.MoveWindow(Xoffset, Yoffset, nReceiptWidth, nCommodityListHeight, TRUE);
 
@@ -242,7 +258,7 @@ void COrderView::ReCalcLayout()
 	
 	Yoffset += nTelephoneHeight;
 
-	sizeScroll.cy = Yoffset+margin;
+	sizeScroll.cy = Yoffset+margin + ptScroll.y;
 	SetScrollSizes(MM_TEXT, sizeScroll);
 
 
@@ -278,4 +294,66 @@ BOOL COrderView::OnEraseBkgnd(CDC* pDC)
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	return TRUE;
 	/*return CFormView::OnEraseBkgnd(pDC);*/
+}
+
+extern void AFXAPI AfxTextFloatFormat(CDataExchange* pDX, int nIDC,
+	void* pData, double value, int nSizeGcvt);
+
+void COrderView::DDXEx_Text(CDataExchange *pDX, int nIDC, double &value, LPCTSTR lpszFormat)
+{
+	if (pDX->m_bSaveAndValidate) {
+		AfxTextFloatFormat(pDX, nIDC, &value, value, DBL_DIG);
+	}
+	else {
+		HWND hWndCtrl = pDX->PrepareEditCtrl(nIDC);
+		
+		CString str;
+		str.Format(lpszFormat, value);
+		::SetWindowText(hWndCtrl, str);
+	}
+}
+
+void COrderView::OnLvnGetdispinfo(NMHDR *pNMHDR, LRESULT *pResult)
+{
+
+	NMLVDISPINFO *pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR);
+	// TODO: 在此添加控件通知处理程序代码
+	if (pDispInfo->item.mask & LVIF_COLUMNS){}
+	if (pDispInfo->item.mask & LVIF_DI_SETITEM){}
+	if (pDispInfo->item.mask & LVIF_GROUPID){}
+	if (pDispInfo->item.mask & LVIF_IMAGE){}
+	if (pDispInfo->item.mask & LVIF_INDENT){}
+	if (pDispInfo->item.mask & LVIF_NORECOMPUTE){}
+	if (pDispInfo->item.mask & LVIF_PARAM){}
+	if (pDispInfo->item.mask & LVIF_STATE){}
+	if (pDispInfo->item.mask & LVIF_TEXT)
+	{
+		int iIndex= pDispInfo->item.iItem;
+		POSITION pos= m_pMainFrame->m_pSelectedOrder->m_listCommodity.FindIndex(iIndex);
+		CCommodity* p_com = m_pMainFrame->m_pSelectedOrder->m_listCommodity.GetAt(pos);
+		CString tmp;
+		switch (pDispInfo->item.iSubItem)
+		{
+		case 0:
+			tmp.Format(_T("%d"), iIndex);
+			lstrcpy(pDispInfo->item.pszText, tmp);
+			break;
+		case 1:
+			lstrcpy(pDispInfo->item.pszText, p_com->m_strName);
+			break;
+		case 2:
+			tmp.Format(_T("%.2d"), p_com->m_dPrice);
+			lstrcpy(pDispInfo->item.pszText, tmp);
+			break;
+		case 3:
+			tmp.Format(_T("%.2d"), p_com->m_dQuantity);
+			lstrcpy(pDispInfo->item.pszText, tmp);
+			break;
+		case 4:
+			tmp.Format(_T("%.2d"), p_com->GetSubtotal());
+			lstrcpy(pDispInfo->item.pszText, tmp);
+			break;
+		}
+	}
+	*pResult = 0;
 }
