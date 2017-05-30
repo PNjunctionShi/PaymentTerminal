@@ -44,6 +44,9 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_UPDATE_COMMAND_UI(ID_Membership, &CMainFrame::OnUpdateMembership)
 	ON_COMMAND(ID_NEW_ORDER, &CMainFrame::OnNewOrder)
 	ON_COMMAND(ID_NEW_COMMODITY, &CMainFrame::OnNewCommodity)
+	ON_COMMAND(ID_COMMODITY_NAME, &CMainFrame::OnCommodityName)
+	ON_COMMAND(ID_COMMODITY_PRICE, &CMainFrame::OnCommodityPrice)
+	ON_COMMAND(ID_COMMODITY_QUANTITY, &CMainFrame::OnCommodityQuantity)
 END_MESSAGE_MAP()
 
 // CMainFrame 构造/析构
@@ -59,6 +62,7 @@ CMainFrame::CMainFrame():m_Operator(_T("喜羊羊"),COperator::OperatorType::Cashie
 	m_pMembershipView = (CMembershipView*)RUNTIME_CLASS(CMembershipView)->CreateObject();
 	m_pCouponView = (CCouponView*)RUNTIME_CLASS(CCouponView)->CreateObject();
 	m_pSelectedOrder = (COrder*)RUNTIME_CLASS(COrder)->CreateObject();
+	m_pSelectedCommodity = NULL;
 	theApp.m_nAppLook = theApp.GetInt(_T("ApplicationLook"), ID_VIEW_APPLOOK_OFF_2007_BLUE);
 }
 
@@ -377,12 +381,11 @@ void CMainFrame::OnNewOrder()
 	m_pOrderDockPane->m_pBaseplate->m_wndCommodityList.SetItemCount((int)(m_pSelectedOrder->m_listCommodity.GetCount()));
 	m_wndRibbonBar.ShowContextCategories(ID_CNTX_ORDER,TRUE);
 	m_wndRibbonBar.ActivateContextCategory(ID_CNTX_ORDER);
-
 	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_HIDE);
 	m_pOrderDockPane->m_pBaseplate->UpdateData(FALSE);
 	m_pOrderDockPane->m_pBaseplate->ReCalcLayout();
 	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_SHOW);
-	
+	m_wndRibbonBar.UpdateData(FALSE);
 	// TODO: 在此添加命令处理程序代码
 }
 
@@ -413,11 +416,48 @@ void CMainFrame::OnNewCommodity()
 	m_pSelectedCommodity = (CCommodity*)(RUNTIME_CLASS(CCommodity)->CreateObject());
 	ASSERT(m_pSelectedOrder);
 	m_pSelectedOrder->m_listCommodity.AddTail(m_pSelectedCommodity);
+
+	
 	m_wndRibbonBar.ShowContextCategories(ID_CNTX_COMMODITY, TRUE);
 	m_wndRibbonBar.ActivateContextCategory(ID_CNTX_COMMODITY);
+	m_wndRibbonBar.UpdateData(FALSE);
+
 	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_HIDE);
 	m_pOrderDockPane->m_pBaseplate->m_wndCommodityList.SetItemCount((int)(m_pSelectedOrder->m_listCommodity.GetCount()));
 	m_pOrderDockPane->m_pBaseplate->ReCalcLayout();
+	int iIndex = m_pOrderDockPane->m_pBaseplate->m_wndCommodityList.GetItemCount()-1;
+	m_pOrderDockPane->m_pBaseplate->m_wndCommodityList.SetItemState(iIndex, LVNI_FOCUSED | LVIS_SELECTED, LVNI_FOCUSED | LVIS_SELECTED);
+	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_SHOW);
+
+	// TODO: 在此添加命令处理程序代码
+}
+
+
+void CMainFrame::OnCommodityName()
+{
+	m_wndRibbonBar.UpdateData(TRUE);
+	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_HIDE);
+	m_pOrderDockPane->m_pBaseplate->UpdateData(FALSE);
+	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_SHOW);
+	// TODO: 在此添加命令处理程序代码
+}
+
+
+void CMainFrame::OnCommodityPrice()
+{
+	m_wndRibbonBar.UpdateData(TRUE);
+	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_HIDE);
+	m_pOrderDockPane->m_pBaseplate->UpdateData(FALSE);
+	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_SHOW);
+	// TODO: 在此添加命令处理程序代码
+}
+
+
+void CMainFrame::OnCommodityQuantity()
+{
+	m_wndRibbonBar.UpdateData(TRUE);
+	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_HIDE);
+	m_pOrderDockPane->m_pBaseplate->UpdateData(FALSE);
 	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_SHOW);
 	// TODO: 在此添加命令处理程序代码
 }

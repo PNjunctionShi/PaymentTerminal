@@ -55,6 +55,7 @@ public:
 	void COrderView::DDXEx_Text(CDataExchange *pDX, int nIDC, double &value, LPCTSTR lpszFormat);
 	CMainFrame* m_pMainFrame;
 	afx_msg void OnLvnGetdispinfo(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnLvnItemchanged(NMHDR *pNMHDR, LRESULT *pResult);
 };
 
 

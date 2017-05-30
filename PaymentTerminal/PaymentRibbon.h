@@ -1,6 +1,7 @@
 #pragma once
 #include "afxribbonconstructor.h"
 
+
 // CUserButton ÃüÁîÄ¿±ê
 
 class CPayRibbonUserButton : public CMFCRibbonApplicationButton
@@ -50,6 +51,7 @@ protected:
 	virtual CSize CalcFixedLayout(BOOL bStretch, BOOL bHorz);
 
 	DECLARE_MESSAGE_MAP()
+	virtual void DoDataExchange(CDataExchange* pDX);
 };
 
 

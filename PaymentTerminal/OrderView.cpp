@@ -62,6 +62,7 @@ BEGIN_MESSAGE_MAP(COrderView, CFormView)
 	ON_WM_MOUSEACTIVATE()
 	ON_WM_ERASEBKGND()
 	ON_NOTIFY(LVN_GETDISPINFO, ID_LIST_COMMODITY, &COrderView::OnLvnGetdispinfo)
+	ON_NOTIFY(LVN_ITEMCHANGED, ID_LIST_COMMODITY, &COrderView::OnLvnItemchanged)
 END_MESSAGE_MAP()
 
 
@@ -342,18 +343,34 @@ void COrderView::OnLvnGetdispinfo(NMHDR *pNMHDR, LRESULT *pResult)
 			lstrcpy(pDispInfo->item.pszText, p_com->m_strName);
 			break;
 		case 2:
-			tmp.Format(_T("%.2d"), p_com->m_dPrice);
+			tmp.Format(_T("%.2f"), p_com->m_dPrice);
 			lstrcpy(pDispInfo->item.pszText, tmp);
 			break;
 		case 3:
-			tmp.Format(_T("%.2d"), p_com->m_dQuantity);
+			tmp.Format(_T("%.2f"), p_com->m_dQuantity);
 			lstrcpy(pDispInfo->item.pszText, tmp);
 			break;
 		case 4:
-			tmp.Format(_T("%.2d"), p_com->GetSubtotal());
+			tmp.Format(_T("%.2f"), p_com->GetSubtotal());
 			lstrcpy(pDispInfo->item.pszText, tmp);
 			break;
 		}
+	}
+	*pResult = 0;
+}
+
+
+void COrderView::OnLvnItemchanged(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
+	// TODO: 在此添加控件通知处理程序代码
+	if ((pNMLV->uNewState & LVIS_FOCUSED) == LVIS_FOCUSED &&
+		(pNMLV->uOldState & LVIS_FOCUSED) == 0)
+	{
+		int iIndex=pNMLV->iItem;
+		POSITION pos = m_pMainFrame->m_pSelectedOrder->m_listCommodity.FindIndex(iIndex);
+		m_pMainFrame->m_pSelectedCommodity = m_pMainFrame->m_pSelectedOrder->m_listCommodity.GetAt(pos);
+		m_pMainFrame->m_wndRibbonBar.UpdateData(FALSE);
 	}
 	*pResult = 0;
 }

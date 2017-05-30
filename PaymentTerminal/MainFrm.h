@@ -24,6 +24,9 @@ class COrderDockPane;
 
 class CMainFrame : public CFrameWndEx
 {
+
+friend class COrderView;
+
 public:
 	COrder* m_pSelectedOrder;
 	CCommodity* m_pSelectedCommodity;
@@ -90,6 +93,9 @@ public:
 	afx_msg void OnNewOrder();
 	CString GenerateSeries();
 	afx_msg void OnNewCommodity();
+	afx_msg void OnCommodityName();
+	afx_msg void OnCommodityPrice();
+	afx_msg void OnCommodityQuantity();
 };
 
 

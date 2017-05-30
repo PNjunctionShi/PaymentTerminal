@@ -22,7 +22,7 @@ class COrder : public CObject
 public:
 	COrder();
 	virtual ~COrder();
-protected:
+public:
 	COleDateTime m_timOrderTime; //订单生成时间
 	CString  m_strSeries; //订单序列号
 	CString m_strCashier; //创建订单的收银员名称

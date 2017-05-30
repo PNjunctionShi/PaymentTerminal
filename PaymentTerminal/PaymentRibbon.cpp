@@ -5,6 +5,7 @@
 #include "PaymentTerminal.h"
 #include "PaymentRibbon.h"
 #include "afxwinverapi.h"
+#include "MainFrm.h"
 
 static const int nMinRibbonWidth = 300;
 
@@ -937,3 +938,20 @@ CPayRibbonContextCaption::~CPayRibbonContextCaption()
 {
 }
 
+
+
+void CPayRibbonBar::DoDataExchange(CDataExchange* pDX)
+{
+	// TODO: 在此添加专用代码和/或调用基类
+	DDX_Text(pDX, ID_TOTAL,((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_dTotal);
+	DDX_Text(pDX, ID_CHARGE, ((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_dCharge);
+	DDX_Text(pDX, ID_CHANGE, ((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_dChange);
+	if(((CMainFrame*)AfxGetMainWnd())->m_pSelectedCommodity!=NULL)
+	{
+		DDX_Text(pDX, ID_COMMODITY_NAME, ((CMainFrame*)AfxGetMainWnd())->m_pSelectedCommodity->m_strName);
+		DDX_Text(pDX, ID_COMMODITY_PRICE, ((CMainFrame*)AfxGetMainWnd())->m_pSelectedCommodity->m_dPrice);
+		DDX_Text(pDX, ID_COMMODITY_QUANTITY, ((CMainFrame*)AfxGetMainWnd())->m_pSelectedCommodity->m_dQuantity);
+	}
+
+	CMFCRibbonBar::DoDataExchange(pDX);
+}
