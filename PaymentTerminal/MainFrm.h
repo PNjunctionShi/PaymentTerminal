@@ -96,6 +96,7 @@ public:
 	afx_msg void OnCommodityName();
 	afx_msg void OnCommodityPrice();
 	afx_msg void OnCommodityQuantity();
+	afx_msg void OnTotal();
 };
 
 

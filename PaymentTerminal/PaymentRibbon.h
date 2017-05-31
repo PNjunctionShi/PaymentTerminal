@@ -49,9 +49,10 @@ public:
 
 protected:
 	virtual CSize CalcFixedLayout(BOOL bStretch, BOOL bHorz);
-
+	BOOL SimpleFloatParse(LPCTSTR lpszText, double& d);
 	DECLARE_MESSAGE_MAP()
 	virtual void DoDataExchange(CDataExchange* pDX);
+	void DDX_OrderTotal(CDataExchange *pDX, int nIDC);
 };
 
 

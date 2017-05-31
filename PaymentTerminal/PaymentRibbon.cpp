@@ -943,7 +943,7 @@ CPayRibbonContextCaption::~CPayRibbonContextCaption()
 void CPayRibbonBar::DoDataExchange(CDataExchange* pDX)
 {
 	// TODO: 在此添加专用代码和/或调用基类
-	DDX_Text(pDX, ID_TOTAL,((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_dTotal);
+	DDX_OrderTotal(pDX, ID_TOTAL);// , ((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_dTotal);
 	DDX_Text(pDX, ID_CHARGE, ((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_dCharge);
 	DDX_Text(pDX, ID_CHANGE, ((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_dChange);
 	if(((CMainFrame*)AfxGetMainWnd())->m_pSelectedCommodity!=NULL)
@@ -954,4 +954,55 @@ void CPayRibbonBar::DoDataExchange(CDataExchange* pDX)
 	}
 
 	CMFCRibbonBar::DoDataExchange(pDX);
+}
+
+BOOL CPayRibbonBar::SimpleFloatParse(LPCTSTR lpszText, double& d)
+{
+	ASSERT(lpszText != NULL);
+	while (*lpszText == ' ' || *lpszText == '\t')
+		lpszText++;
+
+	TCHAR chFirst = lpszText[0];
+	d = _tcstod(lpszText, (LPTSTR*)&lpszText);
+	if (d == 0.0 && chFirst != '0')
+		return FALSE;   // could not convert
+	while (*lpszText == ' ' || *lpszText == '\t')
+		lpszText++;
+
+	if (*lpszText != '\0')
+		return FALSE;   // not terminated properly
+
+	return TRUE;
+}
+
+void CPayRibbonBar::DDX_OrderTotal(CDataExchange *pDX, int nIDC)
+{
+	HWND hWndCtrl = pDX->PrepareEditCtrl(nIDC);
+	if (pDX->m_bSaveAndValidate) {
+		TCHAR szBuffer[32];
+		::GetWindowText(hWndCtrl, szBuffer, _countof(szBuffer));
+		double d;
+		if (szBuffer[0] == '\0')
+		{
+			CString str;
+			((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_bCustomedTotal = FALSE;
+			str.Format(_T("%.2f"), ((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->GetTotal());
+			::SetWindowText(hWndCtrl, str);
+		}
+		else if (!SimpleFloatParse(szBuffer, d))
+		{
+			AfxMessageBox(AFX_IDP_PARSE_REAL);
+			pDX->Fail();            // throws exception
+		}
+		else
+		{
+			((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_dTotal = (float)d;
+			((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_bCustomedTotal = TRUE;
+		}
+	}
+	else {
+		CString str;
+		str.Format(_T("%.2f"), ((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->GetTotal());
+		::SetWindowText(hWndCtrl, str);
+	}
 }

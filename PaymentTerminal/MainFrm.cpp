@@ -47,6 +47,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND(ID_COMMODITY_NAME, &CMainFrame::OnCommodityName)
 	ON_COMMAND(ID_COMMODITY_PRICE, &CMainFrame::OnCommodityPrice)
 	ON_COMMAND(ID_COMMODITY_QUANTITY, &CMainFrame::OnCommodityQuantity)
+	ON_COMMAND(ID_TOTAL, &CMainFrame::OnTotal)
 END_MESSAGE_MAP()
 
 // CMainFrame 构造/析构
@@ -417,7 +418,7 @@ void CMainFrame::OnNewCommodity()
 	ASSERT(m_pSelectedOrder);
 	m_pSelectedOrder->m_listCommodity.AddTail(m_pSelectedCommodity);
 
-	
+	m_pSelectedOrder->GetTotal();
 	m_wndRibbonBar.ShowContextCategories(ID_CNTX_COMMODITY, TRUE);
 	m_wndRibbonBar.ActivateContextCategory(ID_CNTX_COMMODITY);
 	m_wndRibbonBar.UpdateData(FALSE);
@@ -446,6 +447,7 @@ void CMainFrame::OnCommodityName()
 void CMainFrame::OnCommodityPrice()
 {
 	m_wndRibbonBar.UpdateData(TRUE);
+	m_pSelectedOrder->GetTotal();
 	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_HIDE);
 	m_pOrderDockPane->m_pBaseplate->UpdateData(FALSE);
 	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_SHOW);
@@ -454,6 +456,17 @@ void CMainFrame::OnCommodityPrice()
 
 
 void CMainFrame::OnCommodityQuantity()
+{
+	m_wndRibbonBar.UpdateData(TRUE);
+	m_pSelectedOrder->GetTotal();
+	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_HIDE);
+	m_pOrderDockPane->m_pBaseplate->UpdateData(FALSE);
+	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_SHOW);
+	// TODO: 在此添加命令处理程序代码
+}
+
+
+void CMainFrame::OnTotal()
 {
 	m_wndRibbonBar.UpdateData(TRUE);
 	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_HIDE);

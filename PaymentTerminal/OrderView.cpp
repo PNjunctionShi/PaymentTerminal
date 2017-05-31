@@ -5,7 +5,6 @@
 #include "PaymentTerminal.h"
 #include "OrderView.h"
 #include "MainFrm.h"
-
 // COrderView
 
 IMPLEMENT_DYNCREATE(COrderView, CFormView)
@@ -39,7 +38,8 @@ void COrderView::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_STATIC_ORDERTIME, m_pMainFrame->m_pSelectedOrder->m_timOrderTime);
 	DDX_Text(pDX, IDC_STATIC_CASHIER, m_pMainFrame->m_pSelectedOrder->m_strCashier);
 	DDX_Text(pDX, IDC_STATIC_SERIES, m_pMainFrame->m_pSelectedOrder->m_strSeries);
-	DDXEx_Text(pDX, IDC_STATIC_TOTAL, m_pMainFrame->m_pSelectedOrder->m_dTotal,_T("总计: ￥%.2f"));
+	DDX_OrderTotal(pDX, IDC_STATIC_TOTAL, m_pMainFrame->m_pSelectedOrder);
+	/*DDXEx_Text(pDX, IDC_STATIC_TOTAL, m_pMainFrame->m_pSelectedOrder->m_dTotal,_T("总计: ￥%.2f"));*/
 	CString tmp;
 	if (m_pMainFrame->m_pSelectedOrder->m_ePayType == 1)
 		tmp = _T("现金");
@@ -310,6 +310,21 @@ void COrderView::DDXEx_Text(CDataExchange *pDX, int nIDC, double &value, LPCTSTR
 		
 		CString str;
 		str.Format(lpszFormat, value);
+		::SetWindowText(hWndCtrl, str);
+	}
+}
+
+
+void COrderView::DDX_OrderTotal(CDataExchange *pDX, int nIDC, COrder* pOrder)
+{
+	HWND hWndCtrl = pDX->PrepareEditCtrl(nIDC);
+	if (pDX->m_bSaveAndValidate) {
+	}
+	else {
+		CString str;
+		str.Format(_T("总计: ￥%.2f"), pOrder->GetTotal());
+		if (pOrder->m_bCustomedTotal)
+			str = str + _T(" *");
 		::SetWindowText(hWndCtrl, str);
 	}
 }

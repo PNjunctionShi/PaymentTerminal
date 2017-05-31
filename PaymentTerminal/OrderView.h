@@ -1,6 +1,7 @@
 #pragma once
 #include "StaticEx.h"
 #include "CommodityList.h"
+#include "Order.h"
 #include "MainFrm.h"
 
 class CMainFrame;
@@ -52,7 +53,8 @@ public:
 	virtual void ReCalcLayout();
 	virtual void OnDraw(CDC* pDC);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
-	void COrderView::DDXEx_Text(CDataExchange *pDX, int nIDC, double &value, LPCTSTR lpszFormat);
+	void DDXEx_Text(CDataExchange *pDX, int nIDC, double &value, LPCTSTR lpszFormat);
+	void DDX_OrderTotal(CDataExchange *pDX, int nIDC, COrder* pOrder);
 	CMainFrame* m_pMainFrame;
 	afx_msg void OnLvnGetdispinfo(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLvnItemchanged(NMHDR *pNMHDR, LRESULT *pResult);

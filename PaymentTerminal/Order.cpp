@@ -18,6 +18,7 @@ COrder::COrder()
 	m_listCommodity.RemoveAll();
 	m_dTotal = 0;
 	m_bArchived = FALSE;
+	m_bCustomedTotal = FALSE;
 }
 
 COrder::~COrder()
@@ -56,6 +57,23 @@ void COrder::Serialize(CArchive& ar)
 		ar >> m_timPayTime;
 		m_listCommodity.Serialize(ar);
 	}
+}
+
+
+DOUBLE COrder::GetTotal()
+{
+	if (!m_bCustomedTotal)
+	{
+		m_dTotal = 0;
+		POSITION pos = m_listCommodity.GetHeadPosition();
+		CCommodity* tmp;
+		while (pos != NULL)
+		{
+			tmp= m_listCommodity.GetNext(pos);
+			m_dTotal += tmp->GetSubtotal();
+		}
+	}
+	return m_dTotal;
 }
 
 IMPLEMENT_SERIAL(COrder, CObject, 0)
