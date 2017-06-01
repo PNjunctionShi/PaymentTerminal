@@ -60,20 +60,33 @@ void COrder::Serialize(CArchive& ar)
 }
 
 
-DOUBLE COrder::GetTotal()
+DOUBLE COrder::GetTotal(BOOL bForceCalc)
 {
-	if (!m_bCustomedTotal)
+	double dTmp = 0;
+	if ((!m_bCustomedTotal) || bForceCalc)
 	{
-		m_dTotal = 0;
+		dTmp = 0;
 		POSITION pos = m_listCommodity.GetHeadPosition();
 		CCommodity* tmp;
 		while (pos != NULL)
 		{
 			tmp= m_listCommodity.GetNext(pos);
-			m_dTotal += tmp->GetSubtotal();
+			dTmp += tmp->GetSubtotal();
 		}
 	}
-	return m_dTotal;
+	if (!m_bCustomedTotal)
+	{
+		m_dTotal = dTmp;
+		return m_dTotal;
+	}
+	else if (bForceCalc)
+	{
+		return dTmp;
+	}
+	else
+	{
+		return m_dTotal;
+	}
 }
 
 IMPLEMENT_SERIAL(COrder, CObject, 0)

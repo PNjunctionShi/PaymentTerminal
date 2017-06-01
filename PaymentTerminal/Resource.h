@@ -107,13 +107,14 @@
 #define ID_COMMODITY_NAME               32805
 #define ID_COMMODITY_PRICE              32806
 #define ID_COMMODITY_QUANTITY           32807
+#define ID_DELETE_COMMODITY             32808
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        311
-#define _APS_NEXT_COMMAND_VALUE         32808
+#define _APS_NEXT_COMMAND_VALUE         32809
 #define _APS_NEXT_CONTROL_VALUE         1013
 #define _APS_NEXT_SYMED_VALUE           311
 #endif

@@ -33,7 +33,7 @@ public:
 	double m_dCharge; //订单收取
 	double m_dChange; //订单找零
 	double m_dTotal;//订单总计
-	double m_bCustomedTotal; //手动设置而非计算得来的订单总计
+	BOOL m_bCustomedTotal; //手动设置而非计算得来的订单总计
 	BOOL m_bArchived;
 	DECLARE_SERIAL(COrder)
 public:
@@ -42,7 +42,7 @@ public:
 	BOOL SetSeries(); //设置订单序列号
 	BOOL AddCommodity(CCommodity* pCommodity); //添加商品
 	BOOL DeleteCommodity(CCommodity* pCommodity); //删除商品
-	DOUBLE GetTotal();
+	DOUBLE GetTotal(BOOL bForceCalc = FALSE);
 	virtual void Serialize(CArchive& ar);
 };
 

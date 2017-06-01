@@ -97,6 +97,8 @@ public:
 	afx_msg void OnCommodityPrice();
 	afx_msg void OnCommodityQuantity();
 	afx_msg void OnTotal();
+	afx_msg void OnDeleteCommodity();
+	afx_msg void OnUpdateDeleteCommodity(CCmdUI *pCmdUI);
 };
 
 

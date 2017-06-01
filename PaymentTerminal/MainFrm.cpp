@@ -48,6 +48,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND(ID_COMMODITY_PRICE, &CMainFrame::OnCommodityPrice)
 	ON_COMMAND(ID_COMMODITY_QUANTITY, &CMainFrame::OnCommodityQuantity)
 	ON_COMMAND(ID_TOTAL, &CMainFrame::OnTotal)
+	ON_COMMAND(ID_DELETE_COMMODITY, &CMainFrame::OnDeleteCommodity)
+	ON_UPDATE_COMMAND_UI(ID_DELETE_COMMODITY, &CMainFrame::OnUpdateDeleteCommodity)
 END_MESSAGE_MAP()
 
 // CMainFrame 构造/析构
@@ -468,9 +470,65 @@ void CMainFrame::OnCommodityQuantity()
 
 void CMainFrame::OnTotal()
 {
+	m_pSelectedOrder->m_bCustomedTotal = TRUE;
 	m_wndRibbonBar.UpdateData(TRUE);
 	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_HIDE);
 	m_pOrderDockPane->m_pBaseplate->UpdateData(FALSE);
 	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_SHOW);
 	// TODO: 在此添加命令处理程序代码
+}
+
+
+void CMainFrame::OnDeleteCommodity()
+{
+	if (m_pSelectedCommodity != NULL)
+	{
+		POSITION pos = m_pSelectedOrder->m_listCommodity.Find(m_pSelectedCommodity);
+		delete m_pSelectedCommodity;
+		POSITION pos_back = pos;
+		m_pSelectedOrder->m_listCommodity.GetNext(pos);
+		if (pos == NULL)
+		{
+			pos = pos_back;
+			m_pSelectedOrder->m_listCommodity.GetPrev(pos);
+			if (pos == NULL)
+			{
+				m_pSelectedCommodity = NULL;
+			}
+			else
+			{
+				m_pSelectedCommodity = m_pSelectedOrder->m_listCommodity.GetPrev(pos);
+			}
+		}
+		else
+		{
+			m_pSelectedCommodity = m_pSelectedOrder->m_listCommodity.GetNext(pos);
+		}
+		m_pSelectedOrder->m_listCommodity.RemoveAt(pos_back);
+		m_pSelectedOrder->GetTotal();
+		m_wndRibbonBar.UpdateData(FALSE);
+		m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_HIDE);
+		m_pOrderDockPane->m_pBaseplate->m_wndCommodityList.SetItemCount((int)(m_pSelectedOrder->m_listCommodity.GetCount()));
+		m_pOrderDockPane->m_pBaseplate->ReCalcLayout();
+		m_pOrderDockPane->m_pBaseplate->UpdateData(FALSE);
+		m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_SHOW);
+	
+	}
+	// TODO: 在此添加命令处理程序代码
+}
+
+
+void CMainFrame::OnUpdateDeleteCommodity(CCmdUI *pCmdUI)
+{
+	BOOL enableDelete;
+	if (m_pSelectedCommodity == NULL)
+	{
+		enableDelete = FALSE;
+	}
+	else
+	{
+		enableDelete = TRUE;
+	}
+	pCmdUI->Enable(enableDelete);
+	// TODO: 在此添加命令更新用户界面处理程序代码
 }

@@ -997,7 +997,6 @@ void CPayRibbonBar::DDX_OrderTotal(CDataExchange *pDX, int nIDC)
 		else
 		{
 			((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_dTotal = (float)d;
-			((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_bCustomedTotal = TRUE;
 		}
 	}
 	else {
