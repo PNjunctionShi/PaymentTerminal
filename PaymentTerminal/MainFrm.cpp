@@ -50,6 +50,9 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND(ID_TOTAL, &CMainFrame::OnTotal)
 	ON_COMMAND(ID_DELETE_COMMODITY, &CMainFrame::OnDeleteCommodity)
 	ON_UPDATE_COMMAND_UI(ID_DELETE_COMMODITY, &CMainFrame::OnUpdateDeleteCommodity)
+	ON_COMMAND(ID_CHARGE, &CMainFrame::OnCharge)
+	ON_COMMAND(ID_CHANGE, &CMainFrame::OnChange)
+	ON_COMMAND(ID_BTN_CASH, &CMainFrame::OnBtnCash)
 END_MESSAGE_MAP()
 
 // CMainFrame 构造/析构
@@ -442,6 +445,7 @@ void CMainFrame::OnCommodityName()
 	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_HIDE);
 	m_pOrderDockPane->m_pBaseplate->UpdateData(FALSE);
 	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_SHOW);
+	m_wndRibbonBar.UpdateData(FALSE);
 	// TODO: 在此添加命令处理程序代码
 }
 
@@ -449,10 +453,12 @@ void CMainFrame::OnCommodityName()
 void CMainFrame::OnCommodityPrice()
 {
 	m_wndRibbonBar.UpdateData(TRUE);
-	m_pSelectedOrder->GetTotal();
+	//m_pSelectedOrder->GetTotal();
+	m_pSelectedOrder->m_dChange = (m_pSelectedOrder->m_dCharge) - (m_pSelectedOrder->GetTotal(FALSE));
 	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_HIDE);
 	m_pOrderDockPane->m_pBaseplate->UpdateData(FALSE);
 	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_SHOW);
+	m_wndRibbonBar.UpdateData(FALSE);
 	// TODO: 在此添加命令处理程序代码
 }
 
@@ -460,10 +466,12 @@ void CMainFrame::OnCommodityPrice()
 void CMainFrame::OnCommodityQuantity()
 {
 	m_wndRibbonBar.UpdateData(TRUE);
-	m_pSelectedOrder->GetTotal();
+	//m_pSelectedOrder->GetTotal();
+	m_pSelectedOrder->m_dChange = (m_pSelectedOrder->m_dCharge) - (m_pSelectedOrder->GetTotal(FALSE));
 	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_HIDE);
 	m_pOrderDockPane->m_pBaseplate->UpdateData(FALSE);
 	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_SHOW);
+	m_wndRibbonBar.UpdateData(FALSE);
 	// TODO: 在此添加命令处理程序代码
 }
 
@@ -531,4 +539,29 @@ void CMainFrame::OnUpdateDeleteCommodity(CCmdUI *pCmdUI)
 	}
 	pCmdUI->Enable(enableDelete);
 	// TODO: 在此添加命令更新用户界面处理程序代码
+}
+
+
+void CMainFrame::OnCharge()
+{
+	m_wndRibbonBar.UpdateData(TRUE);
+	m_pSelectedOrder->m_dChange = (m_pSelectedOrder->m_dCharge)- (m_pSelectedOrder->GetTotal(FALSE));
+	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_HIDE);
+	m_pOrderDockPane->m_pBaseplate->UpdateData(FALSE);
+	m_pOrderDockPane->m_pBaseplate->ShowWindow(SW_SHOW);
+	m_wndRibbonBar.UpdateData(FALSE);
+	// TODO: 在此添加命令处理程序代码
+}
+
+
+void CMainFrame::OnChange()
+{
+	m_wndRibbonBar.UpdateData(FALSE);
+	// TODO: 在此添加命令处理程序代码
+}
+
+
+void CMainFrame::OnBtnCash()
+{
+	// TODO: 在此添加命令处理程序代码
 }

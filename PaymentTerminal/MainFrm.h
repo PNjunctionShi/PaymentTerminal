@@ -99,6 +99,9 @@ public:
 	afx_msg void OnTotal();
 	afx_msg void OnDeleteCommodity();
 	afx_msg void OnUpdateDeleteCommodity(CCmdUI *pCmdUI);
+	afx_msg void OnCharge();
+	afx_msg void OnChange();
+	afx_msg void OnBtnCash();
 };
 
 

@@ -46,7 +46,7 @@ public:
 	virtual BOOL LoadFromResource(LPCTSTR lpszXMLResID, LPCTSTR lpszResType = RT_RIBBON, HINSTANCE hInstance = NULL);
 	virtual void RecalcLayout();
 	virtual CMFCRibbonBaseElement* HitTest(CPoint point, BOOL bCheckActiveCategory = FALSE, BOOL bCheckPanelCaption = FALSE);
-
+	void DDXEx_Text(CDataExchange *pDX, int nIDC, double &value, LPCTSTR lpszFormat);
 protected:
 	virtual CSize CalcFixedLayout(BOOL bStretch, BOOL bHorz);
 	BOOL SimpleFloatParse(LPCTSTR lpszText, double& d);

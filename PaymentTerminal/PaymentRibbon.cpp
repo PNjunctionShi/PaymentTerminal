@@ -938,14 +938,29 @@ CPayRibbonContextCaption::~CPayRibbonContextCaption()
 {
 }
 
+extern void AFXAPI AfxTextFloatFormat(CDataExchange* pDX, int nIDC,
+	void* pData, double value, int nSizeGcvt);
 
+void CPayRibbonBar::DDXEx_Text(CDataExchange *pDX, int nIDC, double &value, LPCTSTR lpszFormat)
+{
+	if (pDX->m_bSaveAndValidate) {
+		AfxTextFloatFormat(pDX, nIDC, &value, value, DBL_DIG);
+	}
+	else {
+		HWND hWndCtrl = pDX->PrepareEditCtrl(nIDC);
+
+		CString str;
+		str.Format(lpszFormat, value);
+		::SetWindowText(hWndCtrl, str);
+	}
+}
 
 void CPayRibbonBar::DoDataExchange(CDataExchange* pDX)
 {
 	// TODO: 在此添加专用代码和/或调用基类
 	DDX_OrderTotal(pDX, ID_TOTAL);// , ((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_dTotal);
-	DDX_Text(pDX, ID_CHARGE, ((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_dCharge);
-	DDX_Text(pDX, ID_CHANGE, ((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_dChange);
+	DDXEx_Text(pDX, ID_CHARGE, ((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_dCharge, _T("%.2f"));
+	DDXEx_Text(pDX, ID_CHANGE, ((CMainFrame*)AfxGetMainWnd())->m_pSelectedOrder->m_dChange, _T("%.2f"));
 	if(((CMainFrame*)AfxGetMainWnd())->m_pSelectedCommodity!=NULL)
 	{
 		DDX_Text(pDX, ID_COMMODITY_NAME, ((CMainFrame*)AfxGetMainWnd())->m_pSelectedCommodity->m_strName);
